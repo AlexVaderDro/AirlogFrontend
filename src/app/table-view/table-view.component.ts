@@ -89,9 +89,7 @@ export class ExampleHttpDatabase {
 import {Component} from '@angular/core';
 import {MOCK_DATA} from '../mockdata';
 
-/**
- * @title Table with sticky header
- */
+
 @Component({
   selector: 'app-table-view',
   styleUrls: ['./table-view.component.css'],
