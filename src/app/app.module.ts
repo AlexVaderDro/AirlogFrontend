@@ -10,6 +10,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {DemoMaterialModule} from '../material-module';
 import {MatNativeDateModule} from '@angular/material/core';
+import {LogService} from './log.service';
 
 @NgModule({
   declarations: [AppComponent, TableViewComponent, TextViewComponent, TableBasicExampleComponent],
@@ -21,7 +22,8 @@ import {MatNativeDateModule} from '@angular/material/core';
     DemoMaterialModule,
     MatNativeDateModule,
     ReactiveFormsModule,
-  ],  providers: [],
+  ],
+  providers: [LogService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
