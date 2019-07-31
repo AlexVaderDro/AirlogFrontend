@@ -87,8 +87,7 @@ export class ExampleHttpDatabase {
 */
 
 import {Component} from '@angular/core';
-import {MOCK_DATA} from '../mockdata';
-
+import {MOCK_DATA} from '../../mockdata';
 
 @Component({
   selector: 'app-table-view',

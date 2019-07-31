@@ -1,4 +1,4 @@
-import {LogView} from './LogView';
+import {LogView} from './models/log-view';
 
 export const MOCK_DATA: LogView[] = [
   {date: '30.07.2019 11:25:42', message: 'dhjsdiggheruhie'},
