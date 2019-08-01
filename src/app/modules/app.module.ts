@@ -10,6 +10,8 @@ import { DemoMaterialModule } from './material-module';
 import { MatNativeDateModule } from '@angular/material/core';
 import { LogService } from '../services/log.service';
 
+import { AppRoutingModule } from './app-routing.module';
+
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from '../services/in-memory-data.service';
 
@@ -23,6 +25,7 @@ import { InMemoryDataService } from '../services/in-memory-data.service';
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }),
     DemoMaterialModule,
+    AppRoutingModule,
     MatNativeDateModule,
     ReactiveFormsModule,
   ],

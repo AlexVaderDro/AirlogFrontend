@@ -85,18 +85,41 @@ export class ExampleHttpDatabase {
   }
 }
 */
-
-import {Component} from '@angular/core';
-import {MOCK_DATA} from '../../mockdata';
+import {HttpClient} from '@angular/common/http';
+import {merge, Observable, of as observableOf} from 'rxjs';
+import {catchError, map, startWith, switchMap} from 'rxjs/operators';
+import {AfterViewInit, Component} from '@angular/core';
+import {Log} from '../../models/log';
+import {LogService} from '../../services/log.service';
 
 @Component({
   selector: 'app-table-view',
   styleUrls: ['./table-view.component.css'],
   templateUrl: './table-view.component.html',
 })
-export class TableViewComponent {
+export class TableViewComponent implements AfterViewInit {
   displayedColumns = ['date', 'message'];
-  dataSource = MOCK_DATA;
+  exampleDatabase: LogService | null;
+  logs: Log[] = [];
+
+  constructor(private logService: LogService, private httpClient: HttpClient) {}
+
+  /*getLogs(): void {
+    this.logService.getLogs().subscribe(logs => this.logs = logs);
+  }*/
+
+  ngAfterViewInit() {
+    this.exampleDatabase = new LogService(this.httpClient);
+
+
+    merge()
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+          return this.exampleDatabase.getLogs();
+        })
+      ).subscribe(logs => this.logs = logs);
+  }
 }
 
 
