@@ -8,3 +8,9 @@ export const MOCK_DATA: Log[] = [
   {source: 'microservice1', id: 174, date: '29.07.2019 15:09:00', message: 'jgiovjeigwoejgui'},
   {source: 'microservice1', id: 344, date: '29.07.2019 13:56:32', message: 'werweoifhiunvjaidohg'}
 ];
+
+export const MOCK_SOURCE_LIST: string[] = [
+  'Data Receiver 3.5.1',
+  'Payment Supporter 1.0.2',
+  'Access Defender 4.0'
+];

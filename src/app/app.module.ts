@@ -11,12 +11,14 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { LogService } from './services/log.service';
 
 import { AppRoutingModule } from './modules/app-routing.module';
+import { SourceSelectionComponent } from './components/source-selection/source-selection.component';
+import {SourceService} from './services/source.service';
 
 // import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 // import { InMemoryDataService } from './services/in-memory-data.service';
 
 @NgModule({
-  declarations: [AppComponent, TableViewComponent, TextViewComponent],
+  declarations: [AppComponent, TableViewComponent, TextViewComponent, SourceSelectionComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -29,7 +31,10 @@ import { AppRoutingModule } from './modules/app-routing.module';
     MatNativeDateModule,
     ReactiveFormsModule,
   ],
-  providers: [LogService],
+  providers: [
+    LogService,
+    SourceService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

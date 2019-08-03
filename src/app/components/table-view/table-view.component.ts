@@ -17,7 +17,7 @@ export class TableViewComponent implements OnInit {
     this.getLogs();
   }
 
-  getLogs(): void {
+  private getLogs(): void {
     this.logService.getLogs().subscribe(logs => this.logs = logs);
   }
 }
