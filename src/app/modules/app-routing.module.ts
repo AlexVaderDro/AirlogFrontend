@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { TableViewComponent } from '../components/table-view/table-view.component';
 import { TextViewComponent } from '../components/text-view/text-view.component';
 import { RouterModule, Routes } from '@angular/router';
