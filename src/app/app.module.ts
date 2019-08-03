@@ -6,24 +6,26 @@ import { TableViewComponent } from './components/table-view/table-view.component
 import { TextViewComponent } from './components/text-view/text-view.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { DemoMaterialModule } from './material-module';
+import { DemoMaterialModule } from './modules/material-module';
 import { MatNativeDateModule } from '@angular/material/core';
 import { LogService } from './services/log.service';
 
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService } from './services/in-memory-data.service';
-import { HeaderComponent } from './components/header/header.component';
+import { AppRoutingModule } from './modules/app-routing.module';
+
+// import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+// import { InMemoryDataService } from './services/in-memory-data.service';
 
 @NgModule({
-  declarations: [AppComponent, TableViewComponent, TextViewComponent, HeaderComponent],
+  declarations: [AppComponent, TableViewComponent, TextViewComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }),
+    // HttpClientInMemoryWebApiModule.forRoot(
+     // InMemoryDataService, { dataEncapsulation: false }),
     DemoMaterialModule,
+    AppRoutingModule,
     MatNativeDateModule,
     ReactiveFormsModule,
   ],
