@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -9,16 +10,18 @@ export class HeaderComponent implements OnInit {
 
   format = 'table';
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
   tableFormat() {
     console.log('table format');
+    this.router.navigate(['./table']);
   }
 
   textFormat() {
     console.log('text format');
+    this.router.navigate(['./text']);
   }
 }

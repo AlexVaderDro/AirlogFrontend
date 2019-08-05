@@ -8,7 +8,7 @@ import {LogService} from '../../services/log.service';
   templateUrl: './table-view.component.html',
 })
 export class TableViewComponent implements OnInit {
-  displayedColumns = ['date', 'message'];
+  displayedColumns = ['souce', 'date', 'message'];
   logs: Log[] = [];
 
   constructor(private logService: LogService) {}
@@ -18,7 +18,7 @@ export class TableViewComponent implements OnInit {
   }
 
   private getLogs(): void {
-    this.logService.getLogs().subscribe(logs => this.logs = logs["logList"]);
+    this.logService.getLogs().subscribe(logs => this.logs = logs);
   }
 }
 
