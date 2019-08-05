@@ -17,8 +17,8 @@ export class SourceSelectionComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.getSources();
-    this.sources = MOCK_SOURCE_LIST;
+    this.getSources();
+    // this.sources = MOCK_SOURCE_LIST;
   }
 
 }
