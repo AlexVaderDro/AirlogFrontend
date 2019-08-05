@@ -14,18 +14,19 @@ import { AppRoutingModule } from './modules/app-routing.module';
 import { SourceSelectionComponent } from './components/source-selection/source-selection.component';
 import {SourceService} from './services/source.service';
 import {HeaderComponent} from './components/header/header.component';
+import {SourcePipe} from './pipes/source.pipe';
 
 // import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 // import { InMemoryDataService } from './services/in-memory-data.service';
 
 @NgModule({
-  declarations: [AppComponent, TableViewComponent, TextViewComponent, SourceSelectionComponent, HeaderComponent],
+  declarations: [AppComponent, TableViewComponent, TextViewComponent, SourceSelectionComponent, HeaderComponent, SourcePipe],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
-    // HttpClientInMemoryWebApiModule.forRoot(
+    // HttpClientInMemoryWebApiSourceSelectionComponentModule.forRoot(
      // InMemoryDataService, { dataEncapsulation: false }),
     DemoMaterialModule,
     AppRoutingModule,

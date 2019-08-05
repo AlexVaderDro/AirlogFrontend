@@ -9,6 +9,7 @@
 
 table {
   width: calc(100% - 17px);
+  margin-left: 20px;
 }
 
 td {

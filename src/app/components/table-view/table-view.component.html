@@ -1,5 +1,13 @@
 <table mat-table [dataSource]="logs" class="table-view">
 
+  <div>
+    <label>
+      <select>
+        <option *ngFor="let source of sources">{{source}}</option>
+      </select>
+    </label>
+  </div>
+
   <!-- Date Column -->
   <ng-container matColumnDef="date" class="date">
     <th mat-header-cell *matHeaderCellDef> Date </th>
@@ -9,7 +17,7 @@
   <!-- Souce Column -->
   <ng-container matColumnDef="souce" class="souce">
     <th mat-header-cell *matHeaderCellDef> Source </th>
-    <td mat-cell *matCellDef="let element"> {{element.source }} </td>
+    <td mat-cell *matCellDef="let element"> {{element.source}} </td>
   </ng-container>
 
   <!-- Message Column -->
