@@ -19,5 +19,4 @@ export class SourceSelectionComponent implements OnInit {
   ngOnInit() {
     this.getSources();
   }
-
 }
