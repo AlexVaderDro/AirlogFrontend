@@ -10,7 +10,8 @@ import {MOCK_DATA} from '../../mockdata';
   templateUrl: './table-view.component.html',
 })
 export class TableViewComponent implements OnInit {
-  private displayedColumns = ['date', 'message'];
+
+  displayedColumns = ['dateTime', 'message'];
   private logs: Log[] = [];
   private sortableLogs;
 
@@ -24,16 +25,8 @@ export class TableViewComponent implements OnInit {
     this.sortableLogs = new MatTableDataSource(this.logs);
     this.sortableLogs.sort = this.sort;
   }
-
-  /**
-   * When GET request works, MOCK_DATA must be replaced with the commented line.
-   */
+  
   private getLogs(): void {
-    // this.logService.getLogs().subscribe(logs => this.logs = logs["logList"]);
-    this.logs = MOCK_DATA;
+    this.logService.getLogs().subscribe(logs => this.logs = logs);
   }
 }
-
-
-
-
