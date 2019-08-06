@@ -6,3 +6,12 @@
 .table-view {
   width: 100%;
 }
+
+table {
+  width: calc(100% - 17px);
+  margin-left: 20px;
+}
+
+td {
+  white-space: nowrap;
+}
