@@ -13,7 +13,7 @@ import {MOCK_DATA} from '../../mockdata';
 })
 export class TableViewComponent implements OnInit {
 
-  displayedColumns = ['souce', 'dateTime', 'message'];
+  displayedColumns = ['source', 'dateTime', 'message'];
   private logs: Log[] = [];
   private sortableLogs;
   private sources: string[];
@@ -24,15 +24,15 @@ export class TableViewComponent implements OnInit {
 
   ngOnInit() {
     this.getLogs();
-    this.getSources();
+    // this.getSources();
     this.sortableLogs = new MatTableDataSource(this.logs);
     this.sortableLogs.sort = this.sort;
   }
-  
+
   private getLogs(): void {
     this.logService.getLogs().subscribe(logs => this.logs = logs);
   }
-  
+
   private getSources(): void {
     this.sourceService.getSources().subscribe(sources => this.sources = sources);
   }
