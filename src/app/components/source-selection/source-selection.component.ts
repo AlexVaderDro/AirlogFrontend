@@ -8,16 +8,12 @@ import {SourceService} from '../../services/source.service';
 })
 export class SourceSelectionComponent implements OnInit {
   sources: string[];
-  currentSource: string;
 
-  constructor(private sourceService: SourceService) {}
+  constructor(private sourceService: SourceService) {
+  }
 
   private getSources() {
     this.sourceService.getSources().subscribe(sources => this.sources = sources);
-  }
-
-  setCurrentSource(source: string){
-    this.currentSource = source;
   }
 
   ngOnInit() {
