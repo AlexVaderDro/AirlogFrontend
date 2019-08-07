@@ -14,12 +14,13 @@ import {SelectComponent} from './components/select/select.component';
 import {SourceService} from './services/source.service';
 import {HeaderComponent} from './components/header/header.component';
 import {SourcePipe} from './pipes/source.pipe';
+import {LogViewComponent} from './components/log-view/log-view.component';
 
 // import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 // import { InMemoryDataService } from './services/in-memory-data.service';
 
 @NgModule({
-  declarations: [AppComponent, TableViewComponent, TextViewComponent, SelectComponent, HeaderComponent, SourcePipe],
+  declarations: [AppComponent, TableViewComponent, TextViewComponent, SelectComponent, HeaderComponent, SourcePipe, LogViewComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
