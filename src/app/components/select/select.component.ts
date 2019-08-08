@@ -1,4 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {HttpService} from '../../services/http-service/http.service';
 
 @Component({
   selector: 'app-select',
@@ -7,9 +8,17 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class SelectComponent implements OnInit {
 
-  @Input() data: string[];
+  @Input() sources: string[];
+  @Output() selected = new EventEmitter<string>();
+  source: string;
 
-  constructor() {}
+  constructor() {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
+
+  onChange() {
+    this.selected.emit(this.source);
+  }
 }

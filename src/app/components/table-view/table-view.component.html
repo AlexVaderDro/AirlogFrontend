@@ -1,4 +1,3 @@
-<app-log-view></app-log-view>
 
 <table [border]="displayedColumns" mat-table [dataSource]="logs" class="table">
 
@@ -7,7 +6,7 @@
     <th mat-header-cell class="table-column__header-cell" *matHeaderCellDef> Source </th>
     <td mat-cell class="table-column__source" *matCellDef="let element"> {{element.source}} </td>
   </ng-container>
-             
+
   <!-- Date Column -->
   <ng-container matColumnDef="dateTime" class="table-column">
     <th mat-header-cell class="table-column__header-cell" *matHeaderCellDef> Date </th>

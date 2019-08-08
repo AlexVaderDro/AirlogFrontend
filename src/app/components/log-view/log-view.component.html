@@ -1,1 +1,12 @@
-<app-select [data]="sources"></app-select>
+<app-select
+  [sources]="sources"
+  (selected)="selectedSource($event)"
+></app-select>
+
+<div *ngIf="table; else textView">
+  <app-table-view [logs]="logs"></app-table-view>
+</div>
+
+<ng-template #textView>
+  <app-text-view [logs]="logs"></app-text-view>
+</ng-template>

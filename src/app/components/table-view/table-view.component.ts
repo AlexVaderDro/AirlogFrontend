@@ -1,18 +1,21 @@
-import {Component} from '@angular/core';
-import {LogService} from '../../services/log.service';
-import {SourceService} from '../../services/source.service';
-import {LogViewComponent} from '../log-view/log-view.component';
+import {Component, Input, OnInit} from '@angular/core';
+import {Log} from '../../models/log';
+import {HttpService} from '../../services/http-service/http.service';
 
 @Component({
   selector: 'app-table-view',
   styleUrls: ['./table-view.component.css'],
   templateUrl: './table-view.component.html',
 })
-export class TableViewComponent extends LogViewComponent {
+export class TableViewComponent implements OnInit {
+
+  @Input() logs: Log[];
 
   displayedColumns = ['source', 'dateTime', 'message'];
 
-  constructor(protected logService: LogService, protected sourceService: SourceService) {
-    super(logService,  sourceService);
+  constructor() {
+  }
+
+  ngOnInit(): void {
   }
 }

@@ -8,15 +8,22 @@ import {Router} from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private router: Router) {}
+  table: boolean;
 
-  ngOnInit() {}
+  constructor(private router: Router) {
+    this.table = true;
+  }
+
+  ngOnInit() {
+  }
 
   tableFormat() {
-    this.router.navigate(['./table']);
+    this.table = true;
+    // this.router.navigate(['./table']);
   }
 
   textFormat() {
-    this.router.navigate(['./text']);
+    this.table = false;
+    // this.router.navigate(['./text']);
   }
 }

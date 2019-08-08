@@ -1,4 +1,4 @@
-<select class="dropdown">
-  <option class="dropdown__item" *ngFor="let element of data">{{element}}</option>
+<select class="dropdown" [(ngModel)]="source" (change)="onChange()" >
+  <option class="dropdown__item" *ngFor="let element of sources">{{element}}</option>
 </select>
 
