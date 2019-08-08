@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {SourceService} from '../../services/source.service';
 
 @Component({
@@ -7,6 +7,10 @@ import {SourceService} from '../../services/source.service';
   styleUrls: ['./source-selection.component.css']
 })
 export class SourceSelectionComponent implements OnInit {
+
+  // @Input
+  // public items;
+
   sources: string[];
   currentSource: string;
 
@@ -16,9 +20,9 @@ export class SourceSelectionComponent implements OnInit {
     this.sourceService.getSources().subscribe(sources => this.sources = sources);
   }
 
-  setCurrentSource(source: string){
-    this.currentSource = source;
-  }
+  // setCurrentSource(source: string){
+  //   this.currentSource = source;
+  // }
 
   ngOnInit() {
     this.getSources();

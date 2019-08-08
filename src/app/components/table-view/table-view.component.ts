@@ -15,18 +15,19 @@ export class TableViewComponent implements OnInit {
   private logs: Log[] = [];
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private logService: LogService, private sourceSelection: SourceSelectionComponent) {}
+  constructor(private logService: LogService) {}
 
   ngOnInit() {
     this.getLogs();
   }
 
   getLogs(): void {
-    if (this.sourceSelection.currentSource === 'all') {
-      this.logService.getLogs().subscribe(logs => this.logs = logs);
-    } else {
-      this.logService.getLogsBySource(this.sourceSelection.currentSource).subscribe(logs => this.logs = logs);
-    }
+    this.logService.getLogs().subscribe(logs => this.logs = logs);
+    // if (this.sourceSelection.currentSource === 'all' || this.sourceSelection.currentSource === "") {
+    //   this.logService.getLogs().subscribe(logs => this.logs = logs);
+    // } else {
+    //   this.logService.getLogsBySource(this.sourceSelection.currentSource).subscribe(logs => this.logs = logs);
+    // }
   }
 
 
