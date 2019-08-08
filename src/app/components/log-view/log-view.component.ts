@@ -12,6 +12,7 @@ export class LogViewComponent implements OnInit {
 
   protected logs: Log[] = [];
   protected sources: string[];
+  protected currentSource: string;
 
   constructor(protected logService: LogService, protected sourceService: SourceService) {}
 
@@ -21,6 +22,10 @@ export class LogViewComponent implements OnInit {
 
   protected getSources(): void {
     this.sourceService.getSources().subscribe(sources => this.sources = sources);
+  }
+
+  protected setCurrentSource(selectedSource: string) {
+    this.currentSource = selectedSource;
   }
 
   ngOnInit() {

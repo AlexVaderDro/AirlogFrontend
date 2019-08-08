@@ -1,4 +1,4 @@
-<select class="dropdown">
-  <option class="dropdown__item" *ngFor="let element of data">{{element}}</option>
+<select (change)="selectData($event)" class="dropdown">
+  <option [value]="element" class="dropdown__item" *ngFor="let element of data">{{element}}</option>
 </select>
 
