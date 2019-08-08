@@ -1,4 +1,5 @@
-<select class="dropdown">
-  <option class="dropdown__item" *ngFor="let element of data">{{element}}</option>
+<select [(ngModel)]="currentData" (ngModelChange)="onDataChange($event)" class="dropdown">
+  <option [ngValue]="'not specified'" >Not specified</option>
+  <option [ngValue]="element" class="dropdown__item" *ngFor="let element of data">{{element}}</option>
 </select>
 

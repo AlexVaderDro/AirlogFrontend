@@ -7,7 +7,6 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class SourceService {
-
   constructor(private httpClient: HttpClient) {}
 
   public getSources(): Observable<string[]> {

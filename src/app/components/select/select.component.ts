@@ -1,4 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {SourceService} from "../../services/source.service";
 
 @Component({
   selector: 'app-select',
@@ -7,9 +8,21 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class SelectComponent implements OnInit {
 
+  //todo сделать в выпадающем списке дефолтное значение
   @Input() data: string[];
+  @Output() dataChange = new EventEmitter<String>();
+  currentData: string;
 
-  constructor() {}
+  constructor() {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+
+
+  }
+
+  public onDataChange(currentData: string): void{
+    this.currentData = currentData;
+    this.dataChange.emit(currentData);
+  }
 }

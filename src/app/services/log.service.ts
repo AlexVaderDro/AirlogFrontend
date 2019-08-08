@@ -18,6 +18,7 @@ export class LogService {
 
   public getLogsBySource(source: string): Observable<Log[]>{
     const url = `${environment.url}/logs?source=`+source;
+    console.log(url);
     return this.httpClient.get<Log[]>(url, options);
   }
 }
