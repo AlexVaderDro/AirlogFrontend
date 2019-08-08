@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Log} from '../../models/log';
 import {LogService} from '../../services/log.service';
 import {SourceService} from '../../services/source.service';
