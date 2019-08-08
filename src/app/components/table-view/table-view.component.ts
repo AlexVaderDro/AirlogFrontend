@@ -1,26 +1,18 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {Log} from '../../models/log';
+import {Component} from '@angular/core';
 import {LogService} from '../../services/log.service';
-import {MatSort, MatTableDataSource} from '@angular/material';
+import {SourceService} from '../../services/source.service';
+import {LogViewComponent} from '../log-view/log-view.component';
 
 @Component({
   selector: 'app-table-view',
   styleUrls: ['./table-view.component.css'],
   templateUrl: './table-view.component.html',
 })
-export class TableViewComponent implements OnInit {
+export class TableViewComponent extends LogViewComponent {
 
   displayedColumns = ['source', 'dateTime', 'message'];
-  private logs: Log[] = [];
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private logService: LogService) {}
-
-  ngOnInit() {
-    this.getLogs();
-  }
-
-  private getLogs(): void {
-    this.logService.getLogs().subscribe(logs => this.logs = logs);
+  constructor(protected logService: LogService, protected sourceService: SourceService) {
+    super(logService,  sourceService);
   }
 }

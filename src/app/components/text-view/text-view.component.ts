@@ -1,23 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
 import {LogService} from '../../services/log.service';
-import {Log} from '../../models/log';
+import {SourceService} from '../../services/source.service';
+import {LogViewComponent} from '../log-view/log-view.component';
 
 @Component({
   selector: 'app-text-view',
   templateUrl: './text-view.component.html',
   styleUrls: ['./text-view.component.css']
 })
-export class TextViewComponent implements OnInit {
-  logs: Log[];
-
-  constructor(private logService: LogService) {}
-
-  ngOnInit() {
-    this.getLogs();
+export class TextViewComponent extends LogViewComponent {
+  constructor(protected logService: LogService, protected sourceService: SourceService) {
+    super(logService,  sourceService);
   }
-
-  getLogs(): void {
-    this.logService.getLogs().subscribe(logs => this.logs = logs);
-  }
-
 }
