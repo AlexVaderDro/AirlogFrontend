@@ -16,10 +16,10 @@ export class LogService {
     return this.httpClient.get<Log[]>(url, options);
   }
 
-  // public getLogsBySource(source: string): Observable<Log[]> {
-  //   const url = `${environment.url}/logs?source=`+ source;
-  //   return this.httpClient.get<Log[]>(url, options);
-  // }
+  public getLogsBySource(source: string): Observable<Log[]>{
+    const url = `${environment.url}/logs?source=`+source;
+    return this.httpClient.get<Log[]>(url, options);
+  }
 }
 
 const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'});

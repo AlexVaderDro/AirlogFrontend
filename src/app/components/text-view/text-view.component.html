@@ -1,5 +1,7 @@
-<div>
-  <ul>
-    <li *ngFor="let log of logs">{{log | json }}</li>
+<app-log-view></app-log-view>
+
+<div class="container">
+  <ul class="log-list">
+    <li class="log-list__item" *ngFor="let log of logs">{{log.source}} : {{log.dateTime}} [{{log.message}}]</li>
   </ul>
 </div>
