@@ -16,21 +16,25 @@ export class LogViewComponent implements OnInit {
 
   constructor(protected logService: LogService, protected sourceService: SourceService) {}
 
-  protected getLogs(): void {
+  protected getLogs() {
     this.logService.getLogs().subscribe(logs => this.logs = logs);
+  }
+
+  protected getLogsBySource(source: string): void {
+    this.logService.getLogsBySource(source).subscribe(logs => this.logs = logs);
   }
 
   protected getSources(): void {
     this.sourceService.getSources().subscribe(sources => this.sources = sources);
   }
 
-  protected setCurrentSource(selectedSource: string) {
+  protected setCurrentSourceAndUpdateLogs(selectedSource: string) {
     this.currentSource = selectedSource;
+    this.getLogsBySource(this.currentSource);
   }
 
   ngOnInit() {
     this.getSources();
     this.getLogs();
   }
-
 }
