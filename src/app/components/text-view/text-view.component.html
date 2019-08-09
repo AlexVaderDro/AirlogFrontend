@@ -1,6 +1,6 @@
 
 <div class="container">
   <ul class="log-list">
-    <li class="log-list__item" *ngFor="let log of logs">{{log.source}} : {{log.dateTime}} [{{log.message}}]</li>
+    <li class="log-list__item" *ngFor="let log of logs">{{log.source}} : {{log.dateTime | date}} [{{log.message}}]</li>
   </ul>
 </div>

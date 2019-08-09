@@ -24,11 +24,12 @@ export class LogViewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getLogs();
     this.getSources();
   }
 
   protected getSources(): void {
-    this.httpService.getSources().subscribe(sources => this.sources = sources);
+    this.httpService.getSources().subscribe(sources => {this.sources = sources, this.sources.push("not specified")});
   }
 
   protected getLogs(): void {
@@ -36,7 +37,11 @@ export class LogViewComponent implements OnInit {
   }
 
   protected getLogsBySource(): void {
-    this.httpService.getLogsBySource(this.source).subscribe(logs => this.logs = logs);
+    if (this.source == 'not specified'){
+      this.httpService.getLogs().subscribe(logs => this.logs = logs)
+    } else {
+      this.httpService.getLogsBySource(this.source).subscribe(logs => this.logs = logs);
+    }
   }
 
   selectedSource(source) {

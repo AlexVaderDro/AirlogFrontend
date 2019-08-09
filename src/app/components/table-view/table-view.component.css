@@ -21,6 +21,7 @@
 }
 
 .table-column__date{
+  white-space: pre;
   text-align: center;
 }
 
