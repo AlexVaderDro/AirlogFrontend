@@ -15,6 +15,7 @@ import {SourcePipe} from './pipes/source.pipe';
 import {LogViewComponent} from './components/log-view/log-view.component';
 import {HttpService} from './services/http-service/http.service';
 import {NgxPaginationModule} from "ngx-pagination";
+import {MatTableModule} from "@angular/material";
 
 @NgModule({
   declarations: [AppComponent, TableViewComponent, TextViewComponent, SelectComponent, HeaderComponent, SourcePipe, LogViewComponent],
@@ -27,10 +28,7 @@ import {NgxPaginationModule} from "ngx-pagination";
     AppRoutingModule,
     MatNativeDateModule,
     ReactiveFormsModule,
-    NgxPaginationModule
-  ],
-  providers: [
-    HttpService
+    NgxPaginationModule,
   ],
   bootstrap: [AppComponent]
 })

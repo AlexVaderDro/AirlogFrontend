@@ -1,24 +1,8 @@
-
-<table [border]="displayedColumns" mat-table [dataSource]="logs" class="table">
-
-  <!-- Source Column -->
-  <ng-container matColumnDef="source" class="table-column">
-    <th mat-header-cell class="table-column__header-cell" *matHeaderCellDef> Source </th>
-    <td mat-cell class="table-column__source" *matCellDef="let element"> {{element.source}} </td>
-  </ng-container>
-
-  <!-- Date Column -->
-  <ng-container matColumnDef="dateTime" class="table-column">
-    <th mat-header-cell class="table-column__header-cell" *matHeaderCellDef> Date </th>
-    <td mat-cell class="table-column__date" *matCellDef="let element"> {{element.dateTime | date }} </td>
-  </ng-container>
-
-  <!-- Message Column -->
-  <ng-container matColumnDef="message" class="table-column">
-    <th mat-header-cell class="table-column__header-cell" *matHeaderCellDef> Message </th>
-    <td mat-cell class="table-column__message" *matCellDef="let element"> {{element.message}} </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+<table [border]="displayedColumns">
+    <tr *ngFor="let item of logs | paginate:{itemsPerPage: 10, currentPage: p} ">
+      <th>{{item.source}}</th>
+      <th>{{item.dateTime | date}}</th>
+      <th>{{item.message}}</th>
+    </tr>
 </table>
+<pagination-controls (pageChange)="p=$event"></pagination-controls>
