@@ -1,7 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Log} from '../../models/log';
-import {LogService} from '../../services/log.service';
-import {SourceService} from '../../services/source.service';
+import {HttpService} from '../../services/http-service/http.service';
+import {Router} from '@angular/router';
+
+// enum formatEnum {
+//   table,
+//   text
+// }
 
 @Component({
   selector: 'app-log-view',
@@ -10,22 +15,32 @@ import {SourceService} from '../../services/source.service';
 })
 export class LogViewComponent implements OnInit {
 
-  protected logs: Log[] = [];
-  protected sources: string[];
+  @Input() table: boolean;
+  logs: Log[];
+  sources: string[];
+  source: string;
 
-  constructor(protected logService: LogService, protected sourceService: SourceService) {}
-
-  protected getLogs(): void {
-    this.logService.getLogs().subscribe(logs => this.logs = logs);
-  }
-
-  protected getSources(): void {
-    this.sourceService.getSources().subscribe(sources => this.sources = sources);
+  constructor(protected httpService: HttpService) {
   }
 
   ngOnInit() {
     this.getSources();
-    this.getLogs();
   }
 
+  protected getSources(): void {
+    this.httpService.getSources().subscribe(sources => this.sources = sources);
+  }
+
+  protected getLogs(): void {
+    this.httpService.getLogs().subscribe(logs => this.logs = logs);
+  }
+
+  protected getLogsBySource(): void {
+    this.httpService.getLogsBySource(this.source).subscribe(logs => this.logs = logs);
+  }
+
+  selectedSource(source) {
+    this.source = source;
+    this.getLogsBySource();
+  }
 }

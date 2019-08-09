@@ -8,13 +8,12 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {DemoMaterialModule} from './modules/material-module';
 import {MatNativeDateModule} from '@angular/material/core';
-import {LogService} from './services/log.service';
 import {AppRoutingModule} from './modules/app-routing.module';
 import {SelectComponent} from './components/select/select.component';
-import {SourceService} from './services/source.service';
 import {HeaderComponent} from './components/header/header.component';
 import {SourcePipe} from './pipes/source.pipe';
 import {LogViewComponent} from './components/log-view/log-view.component';
+import {HttpService} from './services/http-service/http.service';
 
 // import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 // import { InMemoryDataService } from './services/in-memory-data.service';
@@ -34,8 +33,7 @@ import {LogViewComponent} from './components/log-view/log-view.component';
     ReactiveFormsModule,
   ],
   providers: [
-    LogService,
-    SourceService
+    HttpService
   ],
   bootstrap: [AppComponent]
 })
