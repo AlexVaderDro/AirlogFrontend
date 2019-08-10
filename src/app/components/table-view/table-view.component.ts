@@ -31,9 +31,13 @@ export class TableViewComponent implements OnInit {
   save(date: string, source: string): void {
     console.log(this.getLogsByDateAndSource(date, source));
     for (let log of this.logsToFile){
-      this.strLogs += log.dateTime +" "+log.source+" "+log.message+"\n"
+      let dateInLong = new Date(log.dateTime);
+      let dateInString = dateInLong.toDateString()+" "+dateInLong.toTimeString();
+      this.strLogs += dateInString +" "+log.source+" "+log.message+"\n"
     }
-    this.file = new File([this.strLogs], "logs.txt", {type: "text/plain;charset=utf-8"});
+    let dateInLong = new Date(date);
+    let dateInString = dateInLong.toDateString()+" "+dateInLong.toTimeString();
+    this.file = new File([this.strLogs], "logs_after_"+dateInString+".txt", {type: "text/plain;charset=utf-8"});
     saveAs(this.file);
   }
 }
