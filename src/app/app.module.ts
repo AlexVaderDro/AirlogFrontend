@@ -14,9 +14,8 @@ import {HeaderComponent} from './components/header/header.component';
 import {SourcePipe} from './pipes/source.pipe';
 import {LogViewComponent} from './components/log-view/log-view.component';
 import {HttpService} from './services/http-service/http.service';
-
-// import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-// import { InMemoryDataService } from './services/in-memory-data.service';
+import {NgxPaginationModule} from "ngx-pagination";
+import {MatTableModule} from "@angular/material";
 
 @NgModule({
   declarations: [AppComponent, TableViewComponent, TextViewComponent, SelectComponent, HeaderComponent, SourcePipe, LogViewComponent],
@@ -25,15 +24,11 @@ import {HttpService} from './services/http-service/http.service';
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
-    // HttpClientInMemoryWebApiSourceSelectionComponentModule.forRoot(
-     // InMemoryDataService, { dataEncapsulation: false }),
     DemoMaterialModule,
     AppRoutingModule,
     MatNativeDateModule,
     ReactiveFormsModule,
-  ],
-  providers: [
-    HttpService
+    NgxPaginationModule,
   ],
   bootstrap: [AppComponent]
 })

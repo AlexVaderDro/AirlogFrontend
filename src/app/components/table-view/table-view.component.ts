@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {Log} from '../../models/log';
-import {HttpService} from '../../services/http-service/http.service';
+import {MatPaginator, MatTableDataSource} from "@angular/material";
 
 @Component({
   selector: 'app-table-view',
@@ -8,7 +8,6 @@ import {HttpService} from '../../services/http-service/http.service';
   templateUrl: './table-view.component.html',
 })
 export class TableViewComponent implements OnInit {
-
   @Input() logs: Log[];
 
   displayedColumns = ['source', 'dateTime', 'message'];
