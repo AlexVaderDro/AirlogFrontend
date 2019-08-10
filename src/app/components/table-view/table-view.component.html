@@ -1,8 +1,15 @@
 <table [border]="displayedColumns">
+  <tr>
+    <th>Source</th>
+    <th>Date-time</th>
+    <th>Message</th>
+    <th>Action</th>
+  </tr>
     <tr *ngFor="let item of logs | paginate:{itemsPerPage: 20, currentPage: p} ">
       <th class="table-column__source">{{item.source}}</th>
       <th class="table-column__date">{{item.dateTime | date}}</th>
       <th class="table-column__message">{{item.message}}</th>
+      <th class="table-column__message"><button (click)="save(item.dateTime, item.source)">save</button></th>
     </tr>
 </table>
 <pagination-controls (pageChange)="p=$event"></pagination-controls>
