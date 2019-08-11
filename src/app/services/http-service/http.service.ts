@@ -26,6 +26,12 @@ export class HttpService {
     const url = `${environment.url}/logs?source=${source}`;
     return this.httpClient.get<Log[]>(url, options);
   }
+
+  public getLogsByDateAndSource(date: string, source: string): Observable<Log[]>{
+    const url = `${environment.url}/logs?dateTime=${date}&source=${source}`;
+    console.log(url);
+    return this.httpClient.get<Log[]>(url, options);
+  }
 }
 
 const headers = new HttpHeaders({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'});
