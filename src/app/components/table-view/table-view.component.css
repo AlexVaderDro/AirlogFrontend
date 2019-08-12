@@ -8,7 +8,6 @@
 }
 
 .table-column{
-  width: 100px;
 }
 
 .table-column__header-cell{
@@ -27,4 +26,8 @@
 
 .table-column__message{
   text-align: left;
+}
+
+.table-column__action{
+
 }

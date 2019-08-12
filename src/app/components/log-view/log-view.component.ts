@@ -37,8 +37,8 @@ export class LogViewComponent implements OnInit {
   }
 
   protected getLogsBySource(): void {
-    if (this.source == 'not specified'){
-      this.httpService.getLogs().subscribe(logs => this.logs = logs)
+    if (this.source === 'not specified'){
+      this.httpService.getLogs().subscribe(logs => this.logs = logs);
     } else {
       this.httpService.getLogsBySource(this.source).subscribe(logs => this.logs = logs);
     }

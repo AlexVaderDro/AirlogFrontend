@@ -10,6 +10,7 @@ import {HttpService} from "../../services/http-service/http.service";
 })
 export class TableViewComponent implements OnInit {
   @Input() logs: Log[];
+  @Input() source: string;
   logsToFile: Log[] = [];
   file: File;
   strLogs: string;

@@ -10,6 +10,7 @@ import {Log} from '../../models/log';
 export class TextViewComponent implements OnInit {
 
   @Input() logs: Log[];
+  @Input() source: string;
 
   constructor() {
   }
