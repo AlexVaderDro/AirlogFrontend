@@ -1,4 +1,6 @@
 <ul>
-  <li *ngFor="let item of logs | paginate:{itemsPerPage: 20, currentPage: p} ">{{item.source}} | {{ item.dateTime | date }} | {{ item.message}}</li>
+  <li *ngFor="let item of logs | paginate:{itemsPerPage: 20, currentPage: p} ">
+    {{item.source}} | {{ item.dateTime | date }} | {{ item.message}}
+  </li>
 </ul>
 <pagination-controls (pageChange)="p=$event"></pagination-controls>
