@@ -27,12 +27,12 @@ export class HttpService {
     return this.httpClient.get<Log[]>(url, options);
   }
 
-  public getLogsByDateAndSource(date: string, source: string): Observable<Log[]>{
+  public getLogsByDateAndSource(start: string, end: string, source: string): Observable<Log[]>{
     let url: string;
     if (source == 'not specified'){
-      url = `${environment.url}/logs?dateTime=${date}`;
+      url = `${environment.url}/logs?start=${start}&end=${end}`;
     } else {
-      url = `${environment.url}/logs?dateTime=${date}&source=${source}`;
+      url = `${environment.url}/logs?start=${start}&end=${end}&source=${source}`;
     }
     console.log(source, url);
     return this.httpClient.get<Log[]>(url, options);

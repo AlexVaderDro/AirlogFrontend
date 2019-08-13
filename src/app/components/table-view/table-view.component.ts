@@ -2,6 +2,7 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {Log} from '../../models/log';
 import {saveAs} from 'file-saver';
 import {HttpService} from "../../services/http-service/http.service";
+import {log} from "util";
 
 @Component({
   selector: 'app-table-view',
@@ -11,8 +12,8 @@ import {HttpService} from "../../services/http-service/http.service";
 export class TableViewComponent implements OnInit {
   @Input() logs: Log[];
   @Input() source: string;
-  logsToFile: Log[] = [];
   displayedColumns = ['source', 'dateTime', 'message'];
+  logsToFile: Log[] = [];
 
   constructor(protected httpService: HttpService) {
   }
@@ -21,14 +22,17 @@ export class TableViewComponent implements OnInit {
     this.source = 'not specified';
   }
 
-  getLogsByDateAndSource(date: string, source: string): void {
-    this.httpService.getLogsByDateAndSource(date, source).subscribe(logs => this.logsToFile = logs);
+  getLogsByDate(start: string, end: string): void {
+    this.httpService.getLogsByDateAndSource(start, end, this.source).subscribe(logs => this.logsToFile = logs);
   }
 
-  save(date: string): void {
-    this.getLogsByDateAndSource(date, this.source);
+  save(date: string, dateEnd?: string): void { // dateEnd - optional parameter
+    if (dateEnd == undefined){
+      dateEnd = date+5000; //plus 5 sec
+    }
+    this.getLogsByDate(date, dateEnd);
     let strLogs: string;
-
+    console.log(this.logsToFile);
     for (let log of this.logsToFile) {
       let dateInLong = new Date(log.dateTime);
       let dateInString = dateInLong.toDateString() + " " + dateInLong.toTimeString();
