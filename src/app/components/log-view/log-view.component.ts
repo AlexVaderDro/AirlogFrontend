@@ -29,7 +29,7 @@ export class LogViewComponent implements OnInit {
   }
 
   protected getSources(): void {
-    this.httpService.getSources().subscribe(sources => {this.sources = sources, this.sources.push("not specified")});
+    this.httpService.getSources().subscribe(sources => {this.sources = sources; this.sources.push("not specified")});
   }
 
   protected getLogs(): void {

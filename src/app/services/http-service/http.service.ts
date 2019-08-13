@@ -34,7 +34,6 @@ export class HttpService {
     } else {
       url = `${environment.url}/logs?start=${start}&end=${end}&source=${source}`;
     }
-    console.log(source, url);
     return this.httpClient.get<Log[]>(url, options);
   }
 }
