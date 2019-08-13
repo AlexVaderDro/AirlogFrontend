@@ -28,8 +28,13 @@ export class HttpService {
   }
 
   public getLogsByDateAndSource(date: string, source: string): Observable<Log[]>{
-    const url = `${environment.url}/logs?dateTime=${date}&source=${source}`;
-    console.log(url);
+    let url: string;
+    if (source == 'not specified'){
+      url = `${environment.url}/logs?dateTime=${date}`;
+    } else {
+      url = `${environment.url}/logs?dateTime=${date}&source=${source}`;
+    }
+    console.log(source, url);
     return this.httpClient.get<Log[]>(url, options);
   }
 }
