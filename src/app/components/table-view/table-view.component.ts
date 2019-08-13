@@ -24,7 +24,7 @@ export class TableViewComponent implements OnInit {
 
   save(date: string, dateEnd?: string): void { // dateEnd - optional parameter
     if (dateEnd == undefined){
-      dateEnd = date+5000;
+      dateEnd = date+300000; //plus 5 minutes
     }
     let logsToFile: Log[];
     let strLogs: string;
