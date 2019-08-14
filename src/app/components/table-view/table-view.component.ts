@@ -22,24 +22,33 @@ export class TableViewComponent implements OnInit {
     this.source = 'not specified';
   }
 
-  save(date: string, dateEnd?: string): void { // dateEnd - optional parameter
+  save(dateStart: string, dateEnd?: string): void { // dateEnd - optional parameter
     if (dateEnd == undefined){
-      dateEnd = date+300000; //plus 5 minutes
+      dateEnd = dateStart+300000; //plus 5 minutes
+
     }
     let logsToFile: Log[];
     let strLogs: string;
 
-    this.httpService.getLogsByDateAndSource(date, dateEnd, this.source).subscribe(logs => {
+    dateStart = this.minusMillisecond(dateStart);
+
+    this.httpService.getLogsByDateAndSource(dateStart, dateEnd, this.source).subscribe(logs => {
       logsToFile = logs;
       for (let log of logsToFile) {
         let dateInLong = new Date(log.dateTime);
         let dateInString = dateInLong.toDateString() + " " + dateInLong.toTimeString();
         strLogs += dateInString + " " + log.source + " " + log.message + "\n"
       }
-      let dateInLong = new Date(date);
+      let dateInLong = new Date(dateStart);
       let dateInString = dateInLong.toDateString() + " " + dateInLong.toTimeString();
       let file = new File([strLogs], "logs_after_" + dateInString + ".txt", {type: "text/plain;charset=utf-8"});
       saveAs(file);
     });
+  }
+
+  private minusMillisecond(date: string): string{
+    let d = new Date(date);
+    d.setMilliseconds(d.getMilliseconds()-1);
+    return d.getTime().toString();
   }
 }
