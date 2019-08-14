@@ -29,7 +29,7 @@ export class HttpService {
 
   public getLogsByDateAndSource(start: string, end: string, source: string): Observable<Log[]>{
     let url: string;
-    if (source == 'not specified'){
+    if (source == undefined){
       url = `${environment.url}/logs?start=${start}&end=${end}`;
     } else {
       url = `${environment.url}/logs?start=${start}&end=${end}&source=${source}`;

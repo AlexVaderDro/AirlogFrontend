@@ -19,7 +19,6 @@ export class TableViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.source = 'not specified';
   }
 
   save(dateStart: string, dateEnd?: string): void { // dateEnd - optional parameter
