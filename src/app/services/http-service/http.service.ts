@@ -12,8 +12,18 @@ export class HttpService {
   constructor(private httpClient: HttpClient) {
   }
 
-  public getLogs(): Observable<Log[]> {
-    const url = `${environment.url}/logs`;
+  public getTotalItems(source: string): Observable<number>{
+    let url: string;
+    if (source == undefined || source == 'not specified'){
+      url = `${environment.url}/getTotalItems`
+    } else {
+      url = `${environment.url}/getTotalItems?source=${source}`;
+    }
+    return this.httpClient.get<number>(url, options);
+  }
+
+  public getLogs(pageNum: number, pageSize: number): Observable<Log[]> {
+    const url = `${environment.url}/logs?pageNum=${pageNum}&pageSize=${pageSize}`;
     return this.httpClient.get<Log[]>(url, options);
   }
 
@@ -22,17 +32,17 @@ export class HttpService {
     return this.httpClient.get<string[]>(url, options);
   }
 
-  public getLogsBySource(source: string): Observable<Log[]> {
-    const url = `${environment.url}/logs?source=${source}`;
+  public getLogsBySource(source: string, pageNum: number, pageSize: number): Observable<Log[]> {
+    const url = `${environment.url}/logs?source=${source}&pageNum=${pageNum}&pageSize=${pageSize}`;
     return this.httpClient.get<Log[]>(url, options);
   }
 
-  public getLogsByDateAndSource(start: string, end: string, source: string): Observable<Log[]>{
+  public getLogsByDateAndSource(start: string, end: string, source: string, pageNum: number, pageSize: number): Observable<Log[]>{
     let url: string;
     if (source == undefined){
-      url = `${environment.url}/logs?start=${start}&end=${end}`;
+      url = `${environment.url}/logs?start=${start}&end=${end}&pageNum=${pageNum}&pageSize=${pageSize}`;
     } else {
-      url = `${environment.url}/logs?start=${start}&end=${end}&source=${source}`;
+      url = `${environment.url}/logs?start=${start}&end=${end}&source=${source}&pageNum=${pageNum}&pageSize=${pageSize}`;
     }
     return this.httpClient.get<Log[]>(url, options);
   }
