@@ -5,7 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {LogViewComponent} from '../components/log-view/log-view.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/table', pathMatch: 'full' },
+  { path: '', redirectTo: '', pathMatch: 'full' },
   // { path: 'table', component: LogViewComponent}
 ];
 
