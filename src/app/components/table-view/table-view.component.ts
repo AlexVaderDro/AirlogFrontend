@@ -14,6 +14,7 @@ export class TableViewComponent implements OnInit {
   @Input() totalItems: number;
   displayedColumns = ['source', 'dateTime', 'message'];
   pageNum: number;
+  pageSize: number = 20;
   @Output() pageNumChanged = new EventEmitter<number>();
 
 
