@@ -18,17 +18,16 @@ export class LogViewComponent implements OnInit{
   pageSize = 20;
 
   constructor(protected httpService: HttpService) {
-    this.pageNum = 1;
+    this.pageNum = 0;
   }
 
   setPageNum(pageNum: number){
-    this.pageNum = pageNum;
+    this.pageNum = pageNum - 1;
     this.getLogsBySource(this.source);
   }
   ngOnInit() {
     this.getLogsBySource(this.source);
     this.getSources();
-    this.getTotalItems(this.source);
   }
 
   protected getTotalItems(source: string): void{

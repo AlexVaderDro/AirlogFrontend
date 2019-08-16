@@ -19,7 +19,7 @@ export class TableViewComponent implements OnInit {
 
 
   constructor(protected httpService: HttpService) {
-    this.pageNum = 1;
+    this.pageNum = 0;
   }
 
   ngOnInit(): void {
@@ -42,7 +42,7 @@ export class TableViewComponent implements OnInit {
     dateStart = this.minusMillisecond(dateStart);
 
     //todo 100 - pagesize within saving logs
-    this.httpService.getLogsByDateAndSource(dateStart, dateEnd, this.source, this.pageNum, 100).subscribe(logs => {
+    this.httpService.getLogsByDateAndSource(dateStart, dateEnd, this.source,0, 100).subscribe(logs => {
       logsToFile = logs;
       for (let log of logsToFile) {
         let dateInLong = new Date(log.dateTime);

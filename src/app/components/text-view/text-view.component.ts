@@ -17,7 +17,7 @@ export class TextViewComponent implements OnInit {
   @Output() pageNumChanged = new EventEmitter<number>();
 
   constructor() {
-    this.pageNum = 1;
+    this.pageNum = 0;
   }
 
   ngOnInit(): void {
