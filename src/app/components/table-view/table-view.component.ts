@@ -37,7 +37,7 @@ export class TableViewComponent implements OnInit {
 
     }
     let logsToFile: Log[];
-    let strLogs: string;
+    let strLogs: string = "";
 
     dateStart = this.minusMillisecond(dateStart);
 
