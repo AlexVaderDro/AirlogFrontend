@@ -30,10 +30,10 @@ export class LogViewComponent implements OnInit{
 
   setPageNum(pageNum: number){
     this.pageNum = pageNum;
-    this.getLogs();
+    this.getLogsBySource();
   }
   ngOnInit() {
-    this.getLogs();
+    this.getLogsBySource();
     this.getSources();
     this.getTotalItems(this.source);
   }
@@ -46,12 +46,8 @@ export class LogViewComponent implements OnInit{
     this.httpService.getSources().subscribe(sources => {this.sources = sources; this.sources.push("not specified")});
   }
 
-  protected getLogs(): void {
-    this.httpService.getLogs(this.pageNum, this.pageSize).subscribe(logs => this.logs = logs);
-  }
-
   protected getLogsBySource(): void {
-    if (this.source == 'not specified'){
+    if (this.source == 'not specified' || this.source == undefined){
       this.httpService.getLogs(this.pageNum, this.pageSize).subscribe(logs => this.logs = logs);
     } else {
       this.httpService.getLogsBySource(this.source, this.pageNum, this.pageSize).subscribe(logs => this.logs = logs);
