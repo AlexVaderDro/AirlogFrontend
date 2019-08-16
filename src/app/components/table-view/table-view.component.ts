@@ -1,8 +1,7 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Log} from '../../models/log';
 import {saveAs} from 'file-saver';
 import {HttpService} from "../../services/http-service/http.service";
-import {log} from "util";
 
 @Component({
   selector: 'app-table-view',
@@ -12,13 +11,24 @@ import {log} from "util";
 export class TableViewComponent implements OnInit {
   @Input() logs: Log[];
   @Input() source: string;
+  @Input() totalItems: number;
   displayedColumns = ['source', 'dateTime', 'message'];
-  logsToFile: Log[] = [];
+  pageNum: number;
+  pageSize: number = 20;
+  @Output() pageNumChanged = new EventEmitter<number>();
+
 
   constructor(protected httpService: HttpService) {
+    this.pageNum = 1;
   }
 
   ngOnInit(): void {
+  }
+
+
+  onChange(event){
+    this.pageNum = event;
+    this.pageNumChanged.emit(this.pageNum);
   }
 
   save(dateStart: string, dateEnd?: string): void { // dateEnd - optional parameter
@@ -31,7 +41,8 @@ export class TableViewComponent implements OnInit {
 
     dateStart = this.minusMillisecond(dateStart);
 
-    this.httpService.getLogsByDateAndSource(dateStart, dateEnd, this.source).subscribe(logs => {
+    //todo 100 - pagesize within saving logs
+    this.httpService.getLogsByDateAndSource(dateStart, dateEnd, this.source, this.pageNum, 100).subscribe(logs => {
       logsToFile = logs;
       for (let log of logsToFile) {
         let dateInLong = new Date(log.dateTime);
