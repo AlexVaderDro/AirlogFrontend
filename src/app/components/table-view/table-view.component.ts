@@ -13,7 +13,7 @@ export class TableViewComponent implements OnInit {
   @Input() source: string;
   @Input() totalItems: number;
   displayedColumns = ['source', 'dateTime', 'message'];
-  pageNum: number;
+  @Input() pageNum: number;
   pageSize: number = 20;
   @Output() pageNumChanged = new EventEmitter<number>();
 

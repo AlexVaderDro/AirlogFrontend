@@ -12,7 +12,7 @@ export class TextViewComponent implements OnInit {
   @Input() logs: Log[];
   @Input() source: string;
   pageSize: number = 20;
-  pageNum: number;
+  @Input() pageNum: number;
   @Input() totalItems: number;
   @Output() pageNumChanged = new EventEmitter<number>();
 
