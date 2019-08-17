@@ -1,5 +1,5 @@
 <ul>
-  <li *ngFor="let item of logs | paginate:{itemsPerPage: pageSize, currentPage: pageNum, totalItems: totalItems} ">
+  <li *ngFor="let item of logs | paginate:{itemsPerPage: pageSize, currentPage: pageNum + 1, totalItems: totalItems} ">
     {{item.source}} | {{ item.dateTime | date: "dd/MM/yyyy - hh:mm:ss" }} | {{ item.message}}
   </li>
 </ul>

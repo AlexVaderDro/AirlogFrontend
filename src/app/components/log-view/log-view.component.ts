@@ -1,13 +1,6 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Log} from '../../models/log';
 import {HttpService} from '../../services/http-service/http.service';
-import {Router} from '@angular/router';
-import {TableViewComponent} from "../table-view/table-view.component";
-
-// enum formatEnum {
-//   table,
-//   text
-// }
 
 @Component({
   selector: 'app-log-view',
@@ -25,17 +18,16 @@ export class LogViewComponent implements OnInit{
   pageSize = 20;
 
   constructor(protected httpService: HttpService) {
-    this.pageNum = 1;
+    this.pageNum = 0;
   }
 
   setPageNum(pageNum: number){
-    this.pageNum = pageNum;
-    this.getLogs();
+    this.pageNum = pageNum - 1;
+    this.getLogsBySource(this.source);
   }
   ngOnInit() {
-    this.getLogs();
+    this.getLogsBySource(this.source);
     this.getSources();
-    this.getTotalItems(this.source);
   }
 
   protected getTotalItems(source: string): void{
@@ -46,12 +38,8 @@ export class LogViewComponent implements OnInit{
     this.httpService.getSources().subscribe(sources => {this.sources = sources; this.sources.push("not specified")});
   }
 
-  protected getLogs(): void {
-    this.httpService.getLogs(this.pageNum, this.pageSize).subscribe(logs => this.logs = logs);
-  }
-
-  protected getLogsBySource(): void {
-    if (this.source == 'not specified'){
+  protected getLogsBySource(source: string): void {
+    if (source == 'not specified' || source == undefined){
       this.httpService.getLogs(this.pageNum, this.pageSize).subscribe(logs => this.logs = logs);
     } else {
       this.httpService.getLogsBySource(this.source, this.pageNum, this.pageSize).subscribe(logs => this.logs = logs);
@@ -61,7 +49,7 @@ export class LogViewComponent implements OnInit{
 
   selectedSource(source) {
     this.source = source;
-    this.getLogsBySource();
+    this.getLogsBySource(this.source);
   }
 
 }

@@ -4,9 +4,9 @@
 ></app-select>
 
 <div *ngIf="table; else textView">
-  <app-table-view (pageNumChanged)="setPageNum($event)"  [totalItems]="totalItems" [logs]="logs" [source]="source"></app-table-view>
+  <app-table-view (pageNumChanged)="setPageNum($event)" [pageNum]="pageNum" [totalItems]="totalItems" [logs]="logs" [source]="source"></app-table-view>
 </div>
 
 <ng-template #textView>
-  <app-text-view (pageNumChanged)="setPageNum($event)" [totalItems]="totalItems" [logs]="logs" [source]="source"></app-text-view>
+  <app-text-view (pageNumChanged)="setPageNum($event)" [pageNum]="pageNum" [totalItems]="totalItems" [logs]="logs" [source]="source"></app-text-view>
 </ng-template>
