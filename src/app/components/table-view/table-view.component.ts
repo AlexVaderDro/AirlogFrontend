@@ -1,7 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import {Log} from '../../models/log';
 import {saveAs} from 'file-saver';
-import {HttpService} from "../../services/http-service/http.service";
+import {LogService} from "../../services/http-service/log.service";
 
 @Component({
   selector: 'app-table-view',
@@ -9,26 +9,18 @@ import {HttpService} from "../../services/http-service/http.service";
   templateUrl: './table-view.component.html',
 })
 export class TableViewComponent implements OnInit {
-  @Input() logs: Log[];
-  @Input() source: string;
-  @Input() totalItems: number;
   displayedColumns = ['source', 'dateTime', 'message'];
-  @Input() pageNum: number;
-  pageSize: number = 20;
-  @Output() pageNumChanged = new EventEmitter<number>();
 
-
-  constructor(protected httpService: HttpService) {
-    this.pageNum = 0;
+  constructor(protected httpService: LogService) {
+    this.httpService.getLogs(this.httpService.currentSource,this.httpService.currentPage-1, this.httpService.pageSize).subscribe(logs =>  this.httpService.logs = logs);
   }
 
   ngOnInit(): void {
   }
 
 
-  onChange(event){
-    this.pageNum = event;
-    this.pageNumChanged.emit(this.pageNum);
+  onChange(){
+    this.httpService.getLogs(this.httpService.currentSource,this.httpService.currentPage-1, this.httpService.pageSize).subscribe(logs =>  this.httpService.logs = logs);
   }
 
   save(dateStart: string, dateEnd?: string): void { // dateEnd - optional parameter
@@ -42,7 +34,7 @@ export class TableViewComponent implements OnInit {
     dateStart = this.minusMillisecond(dateStart);
 
     //todo 100 - pagesize within saving logs
-    this.httpService.getLogsByDateAndSource(dateStart, dateEnd, this.source,0, 100).subscribe(logs => {
+    this.httpService.getLogsByDateAndSource(dateStart, dateEnd, this.httpService.currentSource,0, 100).subscribe(logs => {
       logsToFile = logs;
       for (let log of logsToFile) {
         let dateInLong = new Date(log.dateTime);

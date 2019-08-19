@@ -1,6 +1,6 @@
 <ul>
-  <li *ngFor="let item of logs | paginate:{itemsPerPage: pageSize, currentPage: pageNum + 1, totalItems: totalItems} ">
+  <li *ngFor="let item of this.httpService.logs | paginate:{itemsPerPage: this.httpService.pageSize, currentPage: this.httpService.currentPage, totalItems: this.httpService.totalItems} ">
     {{item.source}} | {{ item.dateTime | date: "dd/MM/yyyy - hh:mm:ss" }} | {{ item.message}}
   </li>
 </ul>
-<pagination-controls (pageChange)="onChange($event)"></pagination-controls>
+<pagination-controls (pageChange)="this.httpService.currentPage = $event; onChange()"></pagination-controls>

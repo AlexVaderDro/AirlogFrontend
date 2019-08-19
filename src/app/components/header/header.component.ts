@@ -18,12 +18,10 @@ export class HeaderComponent implements OnInit {
   }
 
   tableFormat() {
-    this.table = true;
-    // this.router.navigate(['./table']);
+    this.router.navigate(['./table']);
   }
 
   textFormat() {
-    this.table = false;
-    // this.router.navigate(['./text']);
+    this.router.navigate(['./text']);
   }
 }

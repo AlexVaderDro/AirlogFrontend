@@ -12,13 +12,10 @@ import {AppRoutingModule} from './modules/app-routing.module';
 import {SelectComponent} from './components/select/select.component';
 import {HeaderComponent} from './components/header/header.component';
 import {SourcePipe} from './pipes/source.pipe';
-import {LogViewComponent} from './components/log-view/log-view.component';
-import {HttpService} from './services/http-service/http.service';
 import {NgxPaginationModule} from "ngx-pagination";
-import {MatTableModule} from "@angular/material";
 
 @NgModule({
-  declarations: [AppComponent, TableViewComponent, TextViewComponent, SelectComponent, HeaderComponent, SourcePipe, LogViewComponent],
+  declarations: [AppComponent, TableViewComponent, TextViewComponent, SelectComponent, HeaderComponent, SourcePipe],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
