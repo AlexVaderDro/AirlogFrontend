@@ -4,7 +4,7 @@ import {TextViewComponent} from '../components/text-view/text-view.component';
 import {RouterModule, Routes} from '@angular/router';
 
 const routes: Routes = [
-  {path: '', redirectTo: "table", pathMatch: 'full'},
+  {path: '', redirectTo: 'table', pathMatch: 'full'},
   {path: 'table', component: TableViewComponent},
   {path: 'text', component: TextViewComponent},
 ];

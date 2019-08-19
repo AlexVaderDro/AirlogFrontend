@@ -3,6 +3,7 @@ import {Observable} from 'rxjs';
 import {Log} from '../../models/log';
 import {environment} from '../../../environments/environment';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {isUndefined} from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -65,8 +66,8 @@ export class LogService {
 
   public getTotalItems(): Observable<number> {
     let url: string;
-    if (this._currentSource == undefined || this._currentSource == 'not specified') {
-      url = `${environment.url}/getTotalItems`
+    if (isUndefined(this._currentSource) || this._currentSource === 'not specified') {
+      url = `${environment.url}/getTotalItems`;
     } else {
       url = `${environment.url}/getTotalItems?source=${this._currentSource}`;
     }

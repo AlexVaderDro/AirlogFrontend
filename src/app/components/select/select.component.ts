@@ -16,7 +16,7 @@ export class SelectComponent implements OnInit {
     httpService.getSources().subscribe(items => {
       this.items = items;
       this.items.push('not specified');
-    })
+    });
   }
 
   ngOnInit() {
@@ -25,7 +25,8 @@ export class SelectComponent implements OnInit {
   onChange() {
     this.selected.emit(this.item);
     this.httpService.currentSource = this.item;
-    this.httpService.getLogs(this.httpService.currentSource, this.httpService.currentPage, this.httpService.pageSize).subscribe(logs => {
+    this.httpService.getLogs(this.httpService.currentSource, this.httpService.currentPage, this.httpService.pageSize)
+      .subscribe(logs => {
       this.httpService.logs = logs;
     });
     this.httpService.getTotalItems().subscribe(num => this.httpService.totalItems = num );
