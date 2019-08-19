@@ -12,13 +12,15 @@ import {AppRoutingModule} from './modules/app-routing.module';
 import {SelectComponent} from './components/select/select.component';
 import {HeaderComponent} from './components/header/header.component';
 import {SourcePipe} from './pipes/source.pipe';
-import {LogViewComponent} from './components/log-view/log-view.component';
-import {HttpService} from './services/http-service/http.service';
-import {NgxPaginationModule} from "ngx-pagination";
-import {MatTableModule} from "@angular/material";
+import {NgxPaginationModule} from 'ngx-pagination';
+import {LoginComponent} from './components/login/login.component';
+import {CookieService} from 'ngx-cookie-service';
 
 @NgModule({
-  declarations: [AppComponent, TableViewComponent, TextViewComponent, SelectComponent, HeaderComponent, SourcePipe, LogViewComponent],
+  declarations: [AppComponent, TableViewComponent,
+    TextViewComponent, SelectComponent,
+    HeaderComponent, SourcePipe,
+    LoginComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -30,6 +32,7 @@ import {MatTableModule} from "@angular/material";
     ReactiveFormsModule,
     NgxPaginationModule,
   ],
+  providers: [CookieService ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

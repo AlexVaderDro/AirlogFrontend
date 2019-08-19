@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import {HttpService} from '../../services/http-service/http.service';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +11,7 @@ export class HeaderComponent implements OnInit {
 
   table: boolean;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, protected httpService: HttpService) {
     this.table = true;
   }
 
@@ -19,11 +20,11 @@ export class HeaderComponent implements OnInit {
 
   tableFormat() {
     this.table = true;
-    // this.router.navigate(['./table']);
+    this.router.navigate(['./table']);
   }
 
   textFormat() {
     this.table = false;
-    // this.router.navigate(['./text']);
+    this.router.navigate(['./text']);
   }
 }

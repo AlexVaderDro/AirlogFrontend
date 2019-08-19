@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Log} from '../../models/log';
 import {saveAs} from 'file-saver';
-import {HttpService} from "../../services/http-service/http.service";
+import {HttpService} from '../../services/http-service/http.service';
+import {isUndefined} from 'util';
 
 @Component({
   selector: 'app-table-view',
@@ -14,26 +15,31 @@ export class TableViewComponent implements OnInit {
   @Input() totalItems: number;
   displayedColumns = ['source', 'dateTime', 'message'];
   pageNum: number;
-  pageSize: number = 20;
+  pageSize = 20;
   @Output() pageNumChanged = new EventEmitter<number>();
 
-
   constructor(protected httpService: HttpService) {
+    console.log('TAble-view constructor');
     this.pageNum = 1;
+    this.httpService.setCurrentPageNum(this.pageNum);
+    this.httpService.setCurrentPageSize(this.pageSize);
+    // this.httpService.getSources();
+    // this.httpService.getLogsBySource();
   }
 
   ngOnInit(): void {
+    this.logs = this.httpService.getCurrentLogs();
+    // console.log(this.httpService.getCurrentSources());
   }
 
-
-  onChange(event){
+  onChange(event) {
     this.pageNum = event;
     this.pageNumChanged.emit(this.pageNum);
   }
 
   save(dateStart: string, dateEnd?: string): void { // dateEnd - optional parameter
-    if (dateEnd == undefined){
-      dateEnd = dateStart+300000; //plus 5 minutes
+    if (isUndefined(dateEnd)) {
+      dateEnd = dateStart + 300000;
 
     }
     let logsToFile: Log[];
@@ -46,19 +52,23 @@ export class TableViewComponent implements OnInit {
       logsToFile = logs;
       for (let log of logsToFile) {
         let dateInLong = new Date(log.dateTime);
-        let dateInString = dateInLong.toDateString() + " " + dateInLong.toTimeString();
-        strLogs += dateInString + " " + log.source + " " + log.message + "\n"
+        let dateInString = dateInLong.toDateString() + ' ' + dateInLong.toTimeString();
+        strLogs += dateInString + ' ' + log.source + ' ' + log.message + '\n';
       }
       let dateInLong = new Date(dateStart);
-      let dateInString = dateInLong.toDateString() + " " + dateInLong.toTimeString();
-      let file = new File([strLogs], "logs_after_" + dateInString + ".txt", {type: "text/plain;charset=utf-8"});
+      let dateInString = dateInLong.toDateString() + ' ' + dateInLong.toTimeString();
+      let file = new File([strLogs], 'logs_after_' + dateInString + '.txt', {type: 'text/plain;charset=utf-8'});
       saveAs(file);
     });
   }
 
-  private minusMillisecond(date: string): string{
+  private minusMillisecond(date: string): string {
     let d = new Date(date);
-    d.setMilliseconds(d.getMilliseconds()-1);
+    d.setMilliseconds(d.getMilliseconds() - 1);
     return d.getTime().toString();
+  }
+
+  selectedSource(source) {
+    this.source = source;
   }
 }

@@ -1,3 +1,7 @@
+<app-select
+  (selected)="selectedSource($event)"
+></app-select>
+
 <table class="table" [border]="displayedColumns">
   <tr>
     <th class="table-column__header-cell" *ngIf="source=='not specified' || source==null">Source</th>

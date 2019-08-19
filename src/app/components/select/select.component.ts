@@ -8,17 +8,25 @@ import {HttpService} from '../../services/http-service/http.service';
 })
 export class SelectComponent implements OnInit {
 
-  @Input() sources: string[];
+  sources: string[];
   @Output() selected = new EventEmitter<string>();
   source: string;
 
-  constructor() {
+
+  constructor(protected httpService: HttpService) {
+    console.log('SELECT COMPONENT CONSTR');
+
+    console.log(this.sources);
   }
 
   ngOnInit() {
+    this.httpService.getSources();
+    this.sources = this.httpService.getCurrentSources();
   }
 
   onChange() {
     this.selected.emit(this.source);
+    this.httpService.setCurrentSource(this.source);
+    this.httpService.getLogsBySource();
   }
 }
