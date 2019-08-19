@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {HttpService} from '../../services/http-service/http.service';
+import {LogService} from '../../services/http-service/log.service';
 
 @Component({
   selector: 'app-select',
@@ -8,17 +8,26 @@ import {HttpService} from '../../services/http-service/http.service';
 })
 export class SelectComponent implements OnInit {
 
-  @Input() sources: string[];
-  @Output() selected = new EventEmitter<string>();
-  source: string;
+  items: string[];
+  selected = new EventEmitter<string>();
+  item: string;
 
-  constructor() {
+  constructor(protected httpService: LogService) {
+    httpService.getSources().subscribe(items => {
+      this.items = items;
+      this.items.push('not specified');
+    })
   }
 
   ngOnInit() {
   }
 
   onChange() {
-    this.selected.emit(this.source);
+    this.selected.emit(this.item);
+    this.httpService.currentSource = this.item;
+    this.httpService.getLogs(this.httpService.currentSource, this.httpService.currentPage, this.httpService.pageSize).subscribe(logs => {
+      this.httpService.logs = logs;
+    });
+    this.httpService.getTotalItems().subscribe(num => this.httpService.totalItems = num );
   }
 }

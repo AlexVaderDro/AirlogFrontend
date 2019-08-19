@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {LogViewComponent} from '../log-view/log-view.component';
 import {Log} from '../../models/log';
+import {LogService} from "../../services/http-service/log.service";
 
 @Component({
   selector: 'app-text-view',
@@ -9,22 +9,14 @@ import {Log} from '../../models/log';
 })
 export class TextViewComponent implements OnInit {
 
-  @Input() logs: Log[];
-  @Input() source: string;
-  pageSize: number = 20;
-  @Input() pageNum: number;
-  @Input() totalItems: number;
-  @Output() pageNumChanged = new EventEmitter<number>();
-
-  constructor() {
-    this.pageNum = 0;
+  constructor(protected httpService: LogService) {
+    this.httpService.getLogs(this.httpService.currentSource,this.httpService.currentPage-1, this.httpService.pageSize).subscribe(logs => this.httpService.logs = logs);
   }
 
   ngOnInit(): void {
   }
 
-  onChange(event) {
-    this.pageNum = event;
-    this.pageNumChanged.emit(this.pageNum);
+  onChange() {
+    this.httpService.getLogs(this.httpService.currentSource,this.httpService.currentPage-1, this.httpService.pageSize).subscribe(logs => this.httpService.logs = logs);
   }
 }
