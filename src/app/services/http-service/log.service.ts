@@ -11,7 +11,7 @@ import {removeSummaryDuplicates} from "@angular/compiler";
   providedIn: 'root'
 })
 export class LogService {
-  
+
   private _logs: Log[];
 
   private _currentSource: string;
@@ -87,9 +87,16 @@ export class LogService {
   }
 
   public update() {
-    this.dateStart = Date.parse(this.dateStart).toString();
-    this.dateEnd = Date.parse(this.dateEnd).toString();
-    this.getLogsByDate(this.dateStart, this.dateEnd, this.currentSource, this.currentPage, this.pageSize);
+    console.log(Date.parse(this.dateEnd)- Date.parse(this.dateStart));
+    if (Date.parse(this.dateEnd) - Date.parse(this.dateStart) < 0) {
+      window.alert("End date must be after start date!");
+      this.dateStart = (Date.now() - 86400000).toString(); //minus day
+      this.dateEnd = (Date.now() + 86400000).toString(); //plus day
+    } else {
+      this.dateStart = Date.parse(this.dateStart).toString();
+      this.dateEnd = Date.parse(this.dateEnd).toString();
+      this.getLogsByDate(this.dateStart, this.dateEnd, this.currentSource, this.currentPage, this.pageSize)
+    }
   }
 
   public getTotalItems(): Observable<number> {
@@ -123,7 +130,7 @@ export class LogService {
     });
   }
 
-  private getLogsToSave(start: string, end: string, source: string, pageNum: number, quantity: number): Observable<Log[]>{
+  private getLogsToSave(start: string, end: string, source: string, pageNum: number, quantity: number): Observable<Log[]> {
     let url = "";
     if (source == undefined || source == 'not specified') {
       url = `${environment.url}/logs?start=${start}&end=${end}&pageNum=${pageNum}&pageSize=${quantity}`;
