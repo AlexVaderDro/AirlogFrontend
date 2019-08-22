@@ -25,10 +25,7 @@ export class SelectComponent implements OnInit {
   onChange() {
     this.selected.emit(this.item);
     this.httpService.currentSource = this.item;
-    this.httpService.getLogs(this.httpService.currentSource, this.httpService.currentPage, this.httpService.pageSize)
-      .subscribe(logs => {
-      this.httpService.logs = logs;
-    });
-    this.httpService.getTotalItems().subscribe(num => this.httpService.totalItems = num );
+    this.httpService.getLogsByDate(this.httpService.dateStart, this.httpService.dateEnd, this.httpService.currentSource,
+      this.httpService.currentPage, this.httpService.pageSize);
   }
 }
