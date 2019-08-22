@@ -19,8 +19,8 @@ export class LogService {
   private _pageSize: number = 20;
   private _totalItems: number;
 
-  private _dateStart: string = (Date.now() - 86400000).toString(); //minus day
-  private _dateEnd: string = (Date.now() + 86400000).toString();   //plus day
+  private _dateStart: string = (Date.now() - 86400000).toString(); // minus day
+  private _dateEnd: string = (Date.now() + 86400000).toString();   // plus day
 
   get dateEnd(): string {
     return this._dateEnd;
@@ -46,7 +46,6 @@ export class LogService {
     this._currentSource = value;
     this.getTotalItems().subscribe(num => this.totalItems = num);
   }
-
 
   get currentPage(): number {
     return this._currentPage;
@@ -81,17 +80,19 @@ export class LogService {
   }
 
   constructor(private httpClient: HttpClient) {
-    let url = `${environment.url}/getTotalItems`;
-    this.httpClient.get<number>(url).subscribe(num => this.totalItems = num);
+    const url = `${environment.backendUrl}/getTotalItems`;
+    this.httpClient.get<number>(url).subscribe(num => {
+      this.totalItems = num;
+    });
     this.getLogsByDate(this.dateStart, this.dateEnd, this.currentSource, this.currentPage, this.pageSize);
   }
 
   public update() {
-    console.log(Date.parse(this.dateEnd)- Date.parse(this.dateStart));
+    console.log(Date.parse(this.dateEnd) - Date.parse(this.dateStart));
     if (Date.parse(this.dateEnd) - Date.parse(this.dateStart) < 0) {
-      window.alert("End date must be after start date!");
-      this.dateStart = (Date.now() - 86400000).toString(); //minus day
-      this.dateEnd = (Date.now() + 86400000).toString(); //plus day
+      window.alert('End date must be after start date!');
+      this.dateStart = (Date.now() - 86400000).toString(); // minus day
+      this.dateEnd = (Date.now() + 86400000).toString(); // plus day
     } else {
       this.dateStart = Date.parse(this.dateStart).toString();
       this.dateEnd = Date.parse(this.dateEnd).toString();
@@ -102,17 +103,23 @@ export class LogService {
   public getTotalItems(): Observable<number> {
     let url: string;
     if (this.currentSource == undefined || this._currentSource === 'not specified') {
-      url = `${environment.url}/getTotalItems?dateStart=${this.dateStart}&dateEnd=${this.dateEnd}`;
+      url = `${environment.backendUrl}/getTotalItems?dateStart=${this.dateStart}&dateEnd=${this.dateEnd}`;
     } else {
-      url = `${environment.url}/getTotalItems?dateStart=${this.dateStart}&dateEnd=${this.dateEnd}&source=${this._currentSource}`;
+      url = `${environment.backendUrl}/getTotalItems?dateStart=${this.dateStart}&dateEnd=${this.dateEnd}&source=${this._currentSource}`;
     }
     console.log(url);
     return this.httpClient.get<number>(url, options);
   }
 
   public getSources(): Observable<string[]> {
-    const url = `${environment.url}/sources`;
+    const url = `${environment.backendUrl}/sources`;
     return this.httpClient.get<string[]>(url, options);
+  }
+
+  // TODO an opportunity to choose: table or text
+  public createLink(id: number): string {
+    // return `${environment.frontendUrl}/table?id=${id}&source=${this.currentSource}&from=${}&to=${}&page=${this.currentPage}`;
+    return `${environment.frontendUrl}/table/${id}/${this.currentSource}/${this.dateStart}/${this.dateEnd}/${this.currentPage}`;
   }
 
   public getLogsByDate(start: string, end: string, source: string, pageNum: number, pageSize: number) {
@@ -121,11 +128,11 @@ export class LogService {
       this.totalItems = num;
       console.log();
       if (source == undefined || source == 'not specified') {
-        url = `${environment.url}/logs?start=${start}&end=${end}&pageNum=${pageNum}&pageSize=${pageSize}`;
+        url = `${environment.backendUrl}/logs?start=${start}&end=${end}&pageNum=${pageNum}&pageSize=${pageSize}`;
       } else {
-        url = `${environment.url}/logs?start=${start}&end=${end}&source=${source}&pageNum=${pageNum}&pageSize=${pageSize}`;
+        url = `${environment.backendUrl}/logs?start=${start}&end=${end}&source=${source}&pageNum=${pageNum}&pageSize=${pageSize}`;
       }
-      console.log(url + " " + this.totalItems);
+      console.log(url + ' ' + this.totalItems);
       this.httpClient.get<Log[]>(url, options).subscribe(logs => this.logs = logs);
     });
   }
@@ -133,9 +140,9 @@ export class LogService {
   private getLogsToSave(start: string, end: string, source: string, pageNum: number, quantity: number): Observable<Log[]> {
     let url = "";
     if (source == undefined || source == 'not specified') {
-      url = `${environment.url}/logs?start=${start}&end=${end}&pageNum=${pageNum}&pageSize=${quantity}`;
+      url = `${environment.backendUrl}/logs?start=${start}&end=${end}&pageNum=${pageNum}&pageSize=${quantity}`;
     } else {
-      url = `${environment.url}/logs?start=${start}&end=${end}&source=${source}&pageNum=${pageNum}&pageSize=${quantity}`;
+      url = `${environment.backendUrl}/logs?start=${start}&end=${end}&source=${source}&pageNum=${pageNum}&pageSize=${quantity}`;
     }
     console.log(url + " " + this.totalItems);
 
@@ -143,7 +150,7 @@ export class LogService {
   }
 
   save(): void {
-    let strLogs = "";
+    let strLogs = '';
     this.getLogsToSave(this.dateStart, this.dateEnd, this.currentSource, 1, this.totalItems).subscribe(logs => {
       for (let log of logs) {
         let dateInLong = new Date(log.dateTime);

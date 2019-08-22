@@ -1,14 +1,20 @@
 <table class="table" [border]="displayedColumns">
-  <tr>
-    <th class="table-column__header-cell" *ngIf="this.httpService.currentSource=='not specified' || this.httpService.currentSource==null">Source</th>
-    <th class="table-column__header-cell">Date-time</th>
-    <th class="table-column__header-cell">Message</th>
+  <tr class="table-row">
+    <th class="table-row__header-cell">Source</th>
+    <th class="table-row__header-cell">Date-time</th>
+    <th class="table-row__header-cell">Message</th>
+    <th class="table-row__header-cell" *ngIf="this.logService.currentSource != 'not specified' && this.logService.currentSource != null">Share</th>
   </tr>
-  <tr *ngFor="let item of this.httpService.logs | paginate:{itemsPerPage: this.httpService.pageSize, currentPage: this.httpService.currentPage, totalItems: this.httpService.totalItems} ">
-    <th *ngIf="this.httpService.currentSource=='not specified' || this.httpService.currentSource==null" class="table-column__source">{{item.source}}</th>
-    <th class="table-column__date">{{item.dateTime | date: "dd/MM/yyyy - hh:mm:ss"}}</th>
-    <th class="table-column__message">{{item.message}}</th>
+  <tr class="table-row table-row_marked" *ngFor="let item of this.logService.logs | paginate:{itemsPerPage: this.logService.pageSize, currentPage: this.logService.currentPage, totalItems: this.logService.totalItems} ">
+    <td class="table-row__source-cell">{{item.source}}</td>
+    <td class="table-row__date-cell">{{item.dateTime  | date: "dd/MM/yyyy - hh:mm:ss"}}</td>
+    <td class="table-row__message-cell">{{item.message}}</td>
+    <td class="table-row__copy-link-cell" *ngIf="this.logService.currentSource != 'not specified' && this.logService.currentSource != null">
+      <button class="table-row__button" type="button" ngxClipboard [cbContent]="this.logService.createLink(item.id)">
+        copy link
+      </button>
+    </td>
   </tr>
 </table>
-<pagination-controls (pageChange)="this.httpService.currentPage = $event; onChange()">
-</pagination-controls>
+
+<pagination-controls (pageChange)="this.logService.currentPage = $event; onChange()"></pagination-controls>
