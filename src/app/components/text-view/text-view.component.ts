@@ -10,16 +10,15 @@ import {LogService} from '../../services/http-service/log.service';
 export class TextViewComponent implements OnInit {
 
   constructor(protected httpService: LogService) {
-    this.httpService.getLogs(
-      this.httpService.currentSource, this.httpService.currentPage - 1, this.httpService.pageSize)
-      .subscribe(logs => this.httpService.logs = logs);
+    this.httpService.getLogsByDate(this.httpService.dateStart, this.httpService.dateEnd,
+      this.httpService.currentSource, this.httpService.currentPage, this.httpService.pageSize);
   }
 
   ngOnInit(): void {
   }
 
   onChange() {
-    this.httpService.getLogs(this.httpService.currentSource, this.httpService.currentPage - 1, this.httpService.pageSize)
-      .subscribe(logs => this.httpService.logs = logs);
+    this.httpService.getLogsByDate(this.httpService.dateStart, this.httpService.dateEnd,
+      this.httpService.currentSource, this.httpService.currentPage, this.httpService.pageSize);
   }
 }

@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import {LogService} from "../../services/http-service/log.service";
 
 @Component({
   selector: 'app-header',
@@ -10,13 +11,12 @@ export class HeaderComponent implements OnInit {
 
   table: boolean;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private httpService: LogService) {
     this.table = true;
   }
 
   ngOnInit() {
   }
-
   tableFormat() {
     this.router.navigate(['./table']);
   }
