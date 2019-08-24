@@ -21,10 +21,7 @@ export class LogService {
   }
 
   set dateStart(value: number) {
-    console.log("DATE START____________________");
-    console.log("before "+ new Date(this.dateStart) + " in ms: "+ this.dateStart);
     this._dateStart = value;
-    console.log("after "+ new Date(this.dateStart) + " in ms: "+ this.dateStart);
     this.getLogsByDate(value, this.dateEnd, this.currentSource, this.currentPage, this.pageSize);
   }
 
@@ -33,10 +30,7 @@ export class LogService {
   }
 
   set dateEnd(value: number) {
-    console.log("DATE END____________________");
-    console.log("before "+ new Date(this.dateEnd) + " in ms: "+ this.dateEnd);
     this._dateEnd = value;
-    console.log("after "+ new Date(this.dateEnd) + " in ms: "+ this.dateEnd);
     this.getLogsByDate(this.dateStart, value, this.currentSource, this.currentPage, this.pageSize);
   }
 
