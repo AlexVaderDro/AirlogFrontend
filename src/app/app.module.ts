@@ -14,9 +14,10 @@ import {HeaderComponent} from './components/header/header.component';
 import {SourcePipe} from './pipes/source.pipe';
 import {NgxPaginationModule} from "ngx-pagination";
 import {ClipboardModule} from "ngx-clipboard";
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
 
 @NgModule({
-  declarations: [AppComponent, TableViewComponent, TextViewComponent, SelectComponent, HeaderComponent, SourcePipe],
+  declarations: [AppComponent, TableViewComponent, TextViewComponent, SelectComponent, HeaderComponent, SourcePipe, ToolbarComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

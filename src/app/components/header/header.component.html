@@ -1,26 +1,5 @@
 <div>
   <header>
     <h1 class="title">Logging Service</h1>
-    <div class="container">
-      <button class="container__button" (click)="tableFormat()">Table</button>
-      <button class="container__button" (click)="textFormat()">Text</button>
-    </div>
-    <div align="center">
-      <p>
-        Select start date:
-        <input [(ngModel)]="logService.dateStart" type="datetime-local">
-      </p>
-      <p>
-        Select end date:
-        <input [(ngModel)]="logService.dateEnd" type="datetime-local">
-      </p>
-      <p>
-        Shown logs between {{logService.dateStart | date :  "dd/MM/yyyy - hh:mm:ss"}} and {{logService.dateEnd | date:  "dd/MM/yyyy - hh:mm:ss"}}
-      </p>
-      <p>
-        <button class="container__button"(click)="logService.update()">Show logs</button>
-        <button class="container__button" (click)="logService.save()">Save logs</button>
-      </p>
-    </div>
   </header>
 </div>

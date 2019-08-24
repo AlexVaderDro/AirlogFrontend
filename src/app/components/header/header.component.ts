@@ -1,6 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {LogService} from '../../services/log-service/log.service';
 
 @Component({
   selector: 'app-header',
@@ -9,17 +7,9 @@ import {LogService} from '../../services/log-service/log.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private router: Router, private logService: LogService) {
+  constructor() {
   }
 
   ngOnInit() {
-  }
-
-  tableFormat() {
-    this.router.navigate(['./table']);
-  }
-
-  textFormat() {
-    this.router.navigate(['./text']);
   }
 }

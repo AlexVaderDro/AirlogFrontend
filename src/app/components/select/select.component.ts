@@ -25,12 +25,5 @@ export class SelectComponent implements OnInit {
   onChange() {
     this.selected.emit(this.item);
     this.logService.currentSource = this.item;
-    this.logService.getLogsByDate(
-      this.logService.dateStart,
-      this.logService.dateEnd,
-      this.logService.currentSource,
-      this.logService.currentPage,
-      this.logService.pageSize
-    );
   }
 }

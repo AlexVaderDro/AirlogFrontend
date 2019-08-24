@@ -1,18 +1,5 @@
 .title{
   font-size: 36px;
   padding-top: 10px;
-  text-align: center;
-}
-
-.container{
-  margin: 0 auto;
-  width: fit-content;
-}
-
-.container__button{
-  padding: 5px 10px;
-  text-align: center;
-  margin-top: 10px;
-  display: inline-block;
-  border-radius: 4px;
+  text-align: left;
 }
