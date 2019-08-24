@@ -1,6 +1,6 @@
 export interface Log {
   source: string;
   id: number;
-  dateTime: string;
+  dateTime: number;
   message: string;
 }
