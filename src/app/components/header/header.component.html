@@ -8,18 +8,18 @@
     <div align="center">
       <p>
         Select start date:
-        <input [(ngModel)]="httpService.dateStart"  type="datetime-local">
+        <input [(ngModel)]="logService.dateStart" type="datetime-local">
       </p>
       <p>
         Select end date:
-        <input [(ngModel)]="httpService.dateEnd" type="datetime-local">
+        <input [(ngModel)]="logService.dateEnd" type="datetime-local">
       </p>
       <p>
-        Shown logs between {{httpService.dateStart | date :  "dd/MM/yyyy - hh:mm:ss"}} and {{httpService.dateEnd | date:  "dd/MM/yyyy - hh:mm:ss"}}
+        Shown logs between {{logService.dateStart | date :  "dd/MM/yyyy - hh:mm:ss"}} and {{logService.dateEnd | date:  "dd/MM/yyyy - hh:mm:ss"}}
       </p>
       <p>
-        <button class="container__button"(click)="httpService.update()">Show logs</button>
-        <button class="container__button" (click)="httpService.save()">Save logs</button>
+        <button class="container__button"(click)="logService.update()">Show logs</button>
+        <button class="container__button" (click)="logService.save()">Save logs</button>
       </p>
     </div>
   </header>

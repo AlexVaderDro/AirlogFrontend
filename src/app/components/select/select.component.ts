@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {LogService} from '../../services/http-service/log.service';
+import {LogService} from '../../services/log-service/log.service';
 
 @Component({
   selector: 'app-select',
@@ -8,12 +8,12 @@ import {LogService} from '../../services/http-service/log.service';
 })
 export class SelectComponent implements OnInit {
 
-  items: string[];
-  selected = new EventEmitter<string>();
-  item: string;
+  private items: string[];
+  private selected = new EventEmitter<string>();
+  private item: string;
 
-  constructor(protected httpService: LogService) {
-    httpService.getSources().subscribe(items => {
+  constructor(private logService: LogService) {
+    logService.getSources().subscribe(items => {
       this.items = items;
       this.items.push('not specified');
     });
@@ -24,8 +24,13 @@ export class SelectComponent implements OnInit {
 
   onChange() {
     this.selected.emit(this.item);
-    this.httpService.currentSource = this.item;
-    this.httpService.getLogsByDate(this.httpService.dateStart, this.httpService.dateEnd, this.httpService.currentSource,
-      this.httpService.currentPage, this.httpService.pageSize);
+    this.logService.currentSource = this.item;
+    this.logService.getLogsByDate(
+      this.logService.dateStart,
+      this.logService.dateEnd,
+      this.logService.currentSource,
+      this.logService.currentPage,
+      this.logService.pageSize
+    );
   }
 }

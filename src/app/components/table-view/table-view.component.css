@@ -7,27 +7,21 @@
   align-content: center;
 }
 
-.table-column{
-}
-
-.table-column__header-cell{
+.table-row__header-cell{
   text-align: center;
   font-size: 20px;
 }
 
-.table-column__source{
+.table-row__source-cell{
   text-align: center;
 }
 
-.table-column__date{
+.table-row__date-cell{
   white-space: pre;
   text-align: center;
 }
 
-.table-column__message{
+.table-row__message-cell{
   text-align: left;
 }
 
-.table-column__action{
-
-}

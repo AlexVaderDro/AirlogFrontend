@@ -8,11 +8,12 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {DemoMaterialModule} from './modules/material-module';
 import {MatNativeDateModule} from '@angular/material/core';
-import {AppRoutingModule} from './modules/app-routing.module';
+import {AppRoutingModule} from './app-routing.module';
 import {SelectComponent} from './components/select/select.component';
 import {HeaderComponent} from './components/header/header.component';
 import {SourcePipe} from './pipes/source.pipe';
 import {NgxPaginationModule} from "ngx-pagination";
+import {ClipboardModule} from "ngx-clipboard";
 
 @NgModule({
   declarations: [AppComponent, TableViewComponent, TextViewComponent, SelectComponent, HeaderComponent, SourcePipe],
@@ -26,6 +27,7 @@ import {NgxPaginationModule} from "ngx-pagination";
     MatNativeDateModule,
     ReactiveFormsModule,
     NgxPaginationModule,
+    ClipboardModule,
   ],
   bootstrap: [AppComponent]
 })
