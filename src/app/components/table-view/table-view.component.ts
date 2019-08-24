@@ -12,11 +12,11 @@ export class TableViewComponent implements OnInit {
   private displayedColumns = ['source', 'dateTime', 'message'];
 
   constructor(private logService: LogService, private activateRoute: ActivatedRoute) {
-    const id = this.activateRoute.snapshot.params['id'];
-    const source = this.activateRoute.snapshot.params['source'];
-    const dateStart = this.activateRoute.snapshot.params['start'];
-    const dateEnd = this.activateRoute.snapshot.params['end'];
-    const page = this.activateRoute.snapshot.params['page'];
+    const id = this.activateRoute.snapshot.queryParams['id'];
+    const source = this.activateRoute.snapshot.queryParams['source'];
+    const dateStart = this.activateRoute.snapshot.queryParams['start'];
+    const dateEnd = this.activateRoute.snapshot.queryParams['end'];
+    const page = this.activateRoute.snapshot.queryParams['page'];
 
     if (id) {
       this.logService.markedLogId = id;

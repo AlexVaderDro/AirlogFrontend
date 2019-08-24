@@ -126,8 +126,8 @@ export class LogService {
   }
 
   public createLink(id: number): string {
-    // return `${environment.frontendUrl}/table?id=${id}&source=${this.currentSource}&from=${}&to=${}&page=${this.currentPage}`;
-    return `${environment.frontendUrl}/table/${id}/${this.currentSource}/${this.dateStart}/${this.dateEnd}/${this.currentPage}`;
+    return `${environment.frontendUrl}/table` +
+      `?id=${id}&source=${this.currentSource}&start=${this.dateStart}&end=${this.dateEnd}&page=${this.currentPage}`;
   }
 
   public getLogsByDate(start: string, end: string, source: string, pageNum: number, pageSize: number) {
