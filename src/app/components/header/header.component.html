@@ -8,17 +8,16 @@
     <div align="center">
       <p>
         Select start date:
-        <input [(ngModel)]="logService.dateStart" type="datetime-local">
+        <input type="datetime-local" [value]="dateStart" (keyup)="setStartDate($event)">
       </p>
       <p>
         Select end date:
-        <input [(ngModel)]="logService.dateEnd" type="datetime-local">
+        <input type="datetime-local"  [value]="dateEnd" (keyup)="setEndDate($event)">
+      <p>
+        Select source:
+        <app-select></app-select>
       </p>
       <p>
-        Shown logs between {{logService.dateStart | date :  "dd/MM/yyyy - hh:mm:ss"}} and {{logService.dateEnd | date:  "dd/MM/yyyy - hh:mm:ss"}}
-      </p>
-      <p>
-        <button class="container__button"(click)="logService.update()">Show logs</button>
         <button class="container__button" (click)="logService.save()">Save logs</button>
       </p>
     </div>

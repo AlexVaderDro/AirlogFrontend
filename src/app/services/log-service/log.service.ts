@@ -1,15 +1,9 @@
-import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Log} from '../../models/log';
 import {environment} from '../../../environments/environment';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {saveAs} from 'file-saver';
-import {isUndefined} from 'util';
-import {removeSummaryDuplicates} from "@angular/compiler";
 
-@Injectable({
-  providedIn: 'root'
-})
 export class LogService {
 
   private _logs: Log[];
@@ -19,23 +13,31 @@ export class LogService {
   private _pageSize: number = 20;
   private _totalItems: number;
 
-  private _dateStart: string = (Date.now() - 86400000).toString(); // minus day
-  private _dateEnd: string = (Date.now() + 86400000).toString();   // plus day
+  private _dateStart: number;
+  private _dateEnd: number;
 
-  get dateEnd(): string {
-    return this._dateEnd;
-  }
-
-  set dateEnd(value: string) {
-    this._dateEnd = value;
-  }
-
-  get dateStart(): string {
+  get dateStart(): number {
     return this._dateStart;
   }
 
-  set dateStart(value: string) {
+  set dateStart(value: number) {
+    console.log("DATE START____________________");
+    console.log("before "+ new Date(this.dateStart) + " in ms: "+ this.dateStart);
     this._dateStart = value;
+    console.log("after "+ new Date(this.dateStart) + " in ms: "+ this.dateStart);
+    this.getLogsByDate(value, this.dateEnd, this.currentSource, this.currentPage, this.pageSize);
+  }
+
+  get dateEnd(): number {
+    return this._dateEnd;
+  }
+
+  set dateEnd(value: number) {
+    console.log("DATE END____________________");
+    console.log("before "+ new Date(this.dateEnd) + " in ms: "+ this.dateEnd);
+    this._dateEnd = value;
+    console.log("after "+ new Date(this.dateEnd) + " in ms: "+ this.dateEnd);
+    this.getLogsByDate(this.dateStart, value, this.currentSource, this.currentPage, this.pageSize);
   }
 
   get currentSource(): string {
@@ -80,24 +82,15 @@ export class LogService {
   }
 
   constructor(private httpClient: HttpClient) {
+    this._dateStart = (Date.now() - environment.millisecondsPerDay); // minus day
+    this.dateEnd = (Date.now());
+
+    console.log("service constructor");
     const url = `${environment.backendUrl}/getTotalItems`;
     this.httpClient.get<number>(url).subscribe(num => {
       this.totalItems = num;
     });
     this.getLogsByDate(this.dateStart, this.dateEnd, this.currentSource, this.currentPage, this.pageSize);
-  }
-
-  public update() {
-    console.log(Date.parse(this.dateEnd) - Date.parse(this.dateStart));
-    if (Date.parse(this.dateEnd) - Date.parse(this.dateStart) < 0) {
-      window.alert('End date must be after start date!');
-      this.dateStart = (Date.now() - 86400000).toString(); // minus day
-      this.dateEnd = (Date.now() + 86400000).toString(); // plus day
-    } else {
-      this.dateStart = Date.parse(this.dateStart).toString();
-      this.dateEnd = Date.parse(this.dateEnd).toString();
-      this.getLogsByDate(this.dateStart, this.dateEnd, this.currentSource, this.currentPage, this.pageSize)
-    }
   }
 
   public getTotalItems(): Observable<number> {
@@ -118,11 +111,10 @@ export class LogService {
 
   // TODO an opportunity to choose: table or text
   public createLink(id: number): string {
-    // return `${environment.frontendUrl}/table?id=${id}&source=${this.currentSource}&from=${}&to=${}&page=${this.currentPage}`;
     return `${environment.frontendUrl}/table/${id}/${this.currentSource}/${this.dateStart}/${this.dateEnd}/${this.currentPage}`;
   }
 
-  public getLogsByDate(start: string, end: string, source: string, pageNum: number, pageSize: number) {
+  public getLogsByDate(start: number, end: number, source: string, pageNum: number, pageSize: number) {
     let url: string;
     this.getTotalItems().subscribe(num => {
       this.totalItems = num;
@@ -137,7 +129,7 @@ export class LogService {
     });
   }
 
-  private getLogsToSave(start: string, end: string, source: string, pageNum: number, quantity: number): Observable<Log[]> {
+  private getLogsToSave(start: number, end: number, source: string, pageNum: number, quantity: number): Observable<Log[]> {
     let url = "";
     if (source == undefined || source == 'not specified') {
       url = `${environment.backendUrl}/logs?start=${start}&end=${end}&pageNum=${pageNum}&pageSize=${quantity}`;
