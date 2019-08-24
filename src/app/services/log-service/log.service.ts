@@ -79,7 +79,6 @@ export class LogService {
     this._dateStart = (Date.now() - environment.millisecondsPerDay); // minus day
     this.dateEnd = (Date.now());
 
-    console.log("service constructor");
     const url = `${environment.backendUrl}/getTotalItems`;
     this.httpClient.get<number>(url).subscribe(num => {
       this.totalItems = num;
@@ -94,7 +93,6 @@ export class LogService {
     } else {
       url = `${environment.backendUrl}/getTotalItems?dateStart=${this.dateStart}&dateEnd=${this.dateEnd}&source=${this._currentSource}`;
     }
-    console.log(url);
     return this.httpClient.get<number>(url, options);
   }
 
@@ -118,7 +116,6 @@ export class LogService {
       } else {
         url = `${environment.backendUrl}/logs?start=${start}&end=${end}&source=${source}&pageNum=${pageNum}&pageSize=${pageSize}`;
       }
-      console.log(url + ' ' + this.totalItems);
       this.httpClient.get<Log[]>(url, options).subscribe(logs => this.logs = logs);
     });
   }
