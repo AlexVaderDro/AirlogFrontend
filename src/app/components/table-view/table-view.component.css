@@ -7,6 +7,14 @@
   align-content: center;
 }
 
+.table-row{
+
+}
+
+.table-row_marked{
+  color: blue;
+}
+
 .table-row__header-cell{
   text-align: center;
   font-size: 20px;

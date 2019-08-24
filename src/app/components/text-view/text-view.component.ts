@@ -8,7 +8,6 @@ import {ActivatedRoute} from '@angular/router';
   styleUrls: ['./text-view.component.css']
 })
 export class TextViewComponent implements OnInit {
-  private markedLogId: number;
 
   constructor(protected logService: LogService, private activateRoute: ActivatedRoute) {
 
@@ -19,8 +18,7 @@ export class TextViewComponent implements OnInit {
     const page = this.activateRoute.snapshot.params['page'];
 
     if (id) {
-      // TODO unable/disable modifier
-      this.markedLogId = id;
+      this.logService.markedLogId = id;
     }
 
     if (dateStart) {

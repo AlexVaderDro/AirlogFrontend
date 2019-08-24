@@ -13,6 +13,7 @@ import {removeSummaryDuplicates} from "@angular/compiler";
 export class LogService {
 
   private _logs: Log[];
+  private _markedLogId: number;
 
   private _currentSource: string;
   private _currentPage: number = 1;
@@ -79,6 +80,14 @@ export class LogService {
     this._logs = value;
   }
 
+  get markedLogId(): number {
+    return this._markedLogId;
+  }
+
+  set markedLogId(value: number) {
+    this._markedLogId = value;
+  }
+
   constructor(private httpClient: HttpClient) {
     const url = `${environment.backendUrl}/getTotalItems`;
     this.httpClient.get<number>(url).subscribe(num => {
@@ -116,7 +125,6 @@ export class LogService {
     return this.httpClient.get<string[]>(url, options);
   }
 
-  // TODO an opportunity to choose: table or text
   public createLink(id: number): string {
     // return `${environment.frontendUrl}/table?id=${id}&source=${this.currentSource}&from=${}&to=${}&page=${this.currentPage}`;
     return `${environment.frontendUrl}/table/${id}/${this.currentSource}/${this.dateStart}/${this.dateEnd}/${this.currentPage}`;

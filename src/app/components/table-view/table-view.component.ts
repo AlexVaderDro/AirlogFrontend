@@ -10,7 +10,6 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class TableViewComponent implements OnInit {
   private displayedColumns = ['source', 'dateTime', 'message'];
-  private markedLogId: number;
 
   constructor(private logService: LogService, private activateRoute: ActivatedRoute) {
     const id = this.activateRoute.snapshot.params['id'];
@@ -20,8 +19,7 @@ export class TableViewComponent implements OnInit {
     const page = this.activateRoute.snapshot.params['page'];
 
     if (id) {
-      // TODO unable/disable modifier
-      this.markedLogId = id;
+      this.logService.markedLogId = id;
     }
 
     if (dateStart) {
