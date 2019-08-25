@@ -14,10 +14,12 @@ import {HeaderComponent} from './components/header/header.component';
 import {SourcePipe} from './pipes/source.pipe';
 import {NgxPaginationModule} from "ngx-pagination";
 import {ClipboardModule} from "ngx-clipboard";
-import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import {ToolbarComponent} from './components/toolbar/toolbar.component';
+import {LogService} from "./services/log-service/log.service";
+import {DateFormatPipe} from "./pipes/date-format.pipe";
 
 @NgModule({
-  declarations: [AppComponent, TableViewComponent, TextViewComponent, SelectComponent, HeaderComponent, SourcePipe, ToolbarComponent],
+  declarations: [AppComponent, TableViewComponent, TextViewComponent, SelectComponent, HeaderComponent, SourcePipe, DateFormatPipe, ToolbarComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -30,6 +32,7 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
     NgxPaginationModule,
     ClipboardModule,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  providers: [LogService]
 })
 export class AppModule {}

@@ -6,9 +6,8 @@ import {RouterModule, Routes} from '@angular/router';
 const routes: Routes = [
   {path: '', redirectTo: 'table', pathMatch: 'full'},
   {path: 'table', component: TableViewComponent},
-  {path: 'table/:id/:source/:start/:end/:page', component: TableViewComponent},
+  {path: 'table?id=:id&source=:source&start=:start&end=:end&page=:page', component: TableViewComponent},
   {path: 'text', component: TextViewComponent},
-  {path: 'text/:id/:source/:start/:end/:page', component: TextViewComponent}
 ];
 
 @NgModule({
