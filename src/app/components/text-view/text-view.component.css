@@ -1,11 +1,11 @@
-.container{
-
-}
-
 .log-list{
 
 }
 
 .log-list__item{
 
+}
+
+.log-list__item_marked{
+  color: blue;
 }

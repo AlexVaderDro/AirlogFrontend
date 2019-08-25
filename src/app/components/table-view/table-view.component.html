@@ -5,7 +5,7 @@
     <th class="table-row__header-cell">Message</th>
     <th class="table-row__header-cell" *ngIf="this.logService.currentSource != 'not specified' && this.logService.currentSource != null">Share</th>
   </tr>
-  <tr class="table-row table-row_marked" *ngFor="let item of this.logService.logs | paginate:{itemsPerPage: this.logService.pageSize, currentPage: this.logService.currentPage, totalItems: this.logService.totalItems} ">
+  <tr class="table-row" [ngClass]="{'table-row_marked': item.id == this.logService.markedLogId}" *ngFor="let item of this.logService.logs | paginate:{itemsPerPage: this.logService.pageSize, currentPage: this.logService.currentPage, totalItems: this.logService.totalItems} ">
     <td class="table-row__source-cell">{{item.source}}</td>
     <td class="table-row__date-cell">{{item.dateTime  | date: "dd/MM/yyyy - hh:mm:ss"}}</td>
     <td class="table-row__message-cell">{{item.message}}</td>
