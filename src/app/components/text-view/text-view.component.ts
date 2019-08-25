@@ -9,25 +9,13 @@ import {LogService} from '../../services/log-service/log.service';
 export class TextViewComponent implements OnInit {
 
   constructor(protected logService: LogService) {
-    this.logService.getLogsByDate(
-      this.logService.dateStart,
-      this.logService.dateEnd,
-      this.logService.currentSource,
-      this.logService.currentPage,
-      this.logService.pageSize
-    );
+    this.logService.getLogs();
   }
 
   ngOnInit(): void {
   }
 
   onChange() {
-    this.logService.getLogsByDate(
-      this.logService.dateStart,
-      this.logService.dateEnd,
-      this.logService.currentSource,
-      this.logService.currentPage,
-      this.logService.pageSize
-    );
+    this.logService.getLogs();
   }
 }
