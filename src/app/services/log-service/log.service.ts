@@ -91,7 +91,10 @@ export class LogService {
     this.dateStart = (Date.now() - MILLISECONDS_PER_DAY); // minus day
     this.dateEnd = (Date.now());
     const url = `${environment.backendUrl}/getTotalItems`;
-    this.httpClient.get<number>(url).subscribe(num => this.totalItems = num);
+    this.httpClient.get<number>(url).subscribe(num => {
+      this.totalItems = num;
+    });
+    this.getLogs();
   }
 
   public getTotalItems(): Observable<number> {
@@ -114,16 +117,14 @@ export class LogService {
       `?id=${id}&source=${this.currentSource}&start=${this.dateStart}&end=${this.dateEnd}&page=${this.currentPage}`;
   }
 
-  public getLogs(): void {
+  public getLogs() {
     let url: string;
     this.getTotalItems().subscribe(num => {
       this.totalItems = num;
       if (this.currentSource == undefined || this.currentSource == 'not specified') {
-        url = `${environment.backendUrl}/logs` +
-          `?start=${this.dateStart}&end=${this.dateEnd}&pageNum=${this.currentPage}&pageSize=${this.pageSize}`;
+        url = `${environment.backendUrl}/logs?start=${this.dateStart}&end=${this.dateEnd}&pageNum=${this.currentPage}&pageSize=${this.pageSize}`;
       } else {
-        url = `${environment.backendUrl}/logs` +
-          `?start=${this.dateStart}&end=${this.dateEnd}&source=${this.currentSource}&pageNum=${this.currentPage}&pageSize=${this.pageSize}`;
+        url = `${environment.backendUrl}/logs?start=${this.dateStart}&end=${this.dateEnd}&source=${this.currentSource}&pageNum=${this.currentPage}&pageSize=${this.pageSize}`;
       }
       this.httpClient.get<Log[]>(url, OPTIONS).subscribe(logs => this.logs = logs);
     });
