@@ -38,25 +38,13 @@ export class TableViewComponent implements OnInit {
       this.logService.currentPage = page;
     }
 
-    this.logService.getLogsByDate(
-      this.logService.dateStart,
-      this.logService.dateEnd,
-      this.logService.currentSource,
-      this.logService.currentPage,
-      this.logService.pageSize
-    );
+    this.logService.getLogs();
   }
 
   ngOnInit(): void {
   }
 
   onChange() {
-    this.logService.getLogsByDate(
-      this.logService.dateStart,
-      this.logService.dateEnd,
-      this.logService.currentSource,
-      this.logService.currentPage,
-      this.logService.pageSize
-    );
+    this.logService.getLogs();
   }
 }
