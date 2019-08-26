@@ -91,10 +91,7 @@ export class LogService {
     this.dateStart = (Date.now() - MILLISECONDS_PER_DAY); // minus day
     this.dateEnd = (Date.now());
     const url = `${environment.backendUrl}/getTotalItems`;
-    this.httpClient.get<number>(url).subscribe(num => {
-      this.totalItems = num;
-    });
-    this.getLogs();
+    this.httpClient.get<number>(url).subscribe(num => this.totalItems = num);
   }
 
   public getTotalItems(): Observable<number> {
