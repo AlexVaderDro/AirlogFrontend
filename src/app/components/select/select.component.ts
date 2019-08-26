@@ -16,6 +16,7 @@ export class SelectComponent implements OnInit {
     logService.getSources().subscribe(items => {
       this.items = items;
       this.items.push('not specified');
+      this.item = this.logService.currentSource;
     });
   }
 
@@ -25,5 +26,6 @@ export class SelectComponent implements OnInit {
   onChange() {
     this.selected.emit(this.item);
     this.logService.currentSource = this.item;
+    this.logService.getLogs();
   }
 }

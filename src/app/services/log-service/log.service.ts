@@ -3,6 +3,11 @@ import {Log} from '../../models/log';
 import {environment} from '../../../environments/environment';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {saveAs} from 'file-saver';
+import {ActivatedRoute, Router} from "@angular/router";
+
+const MILLISECONDS_PER_DAY = 86400000;
+const HEADERS = new HttpHeaders({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'});
+const OPTIONS = {headers: HEADERS};
 
 export class LogService {
 
@@ -23,7 +28,6 @@ export class LogService {
 
   set dateStart(value: number) {
     this._dateStart = value;
-    this.getLogsByDate(value, this.dateEnd, this.currentSource, this.currentPage, this.pageSize);
   }
 
   get dateEnd(): number {
@@ -32,7 +36,6 @@ export class LogService {
 
   set dateEnd(value: number) {
     this._dateEnd = value;
-    this.getLogsByDate(this.dateStart, value, this.currentSource, this.currentPage, this.pageSize);
   }
 
   get currentSource(): string {
@@ -85,14 +88,10 @@ export class LogService {
   }
 
   constructor(private httpClient: HttpClient) {
-    this._dateStart = (Date.now() - environment.millisecondsPerDay); // minus day
+    this.dateStart = (Date.now() - MILLISECONDS_PER_DAY); // minus day
     this.dateEnd = (Date.now());
-
     const url = `${environment.backendUrl}/getTotalItems`;
-    this.httpClient.get<number>(url).subscribe(num => {
-      this.totalItems = num;
-    });
-    this.getLogsByDate(this.dateStart, this.dateEnd, this.currentSource, this.currentPage, this.pageSize);
+    this.httpClient.get<number>(url).subscribe(num => this.totalItems = num);
   }
 
   public getTotalItems(): Observable<number> {
@@ -102,12 +101,12 @@ export class LogService {
     } else {
       url = `${environment.backendUrl}/getTotalItems?dateStart=${this.dateStart}&dateEnd=${this.dateEnd}&source=${this._currentSource}`;
     }
-    return this.httpClient.get<number>(url, options);
+    return this.httpClient.get<number>(url, OPTIONS);
   }
 
   public getSources(): Observable<string[]> {
     const url = `${environment.backendUrl}/sources`;
-    return this.httpClient.get<string[]>(url, options);
+    return this.httpClient.get<string[]>(url, OPTIONS);
   }
 
   public createLink(id: number): string {
@@ -115,45 +114,32 @@ export class LogService {
       `?id=${id}&source=${this.currentSource}&start=${this.dateStart}&end=${this.dateEnd}&page=${this.currentPage}`;
   }
 
-  public getLogsByDate(start: number, end: number, source: string, pageNum: number, pageSize: number) {
+  public getLogs(): void {
     let url: string;
     this.getTotalItems().subscribe(num => {
       this.totalItems = num;
-      console.log();
-      if (source == undefined || source == 'not specified') {
-        url = `${environment.backendUrl}/logs?start=${start}&end=${end}&pageNum=${pageNum}&pageSize=${pageSize}`;
+      if (this.currentSource == undefined || this.currentSource == 'not specified') {
+        url = `${environment.backendUrl}/logs` +
+          `?start=${this.dateStart}&end=${this.dateEnd}&pageNum=${this.currentPage}&pageSize=${this.pageSize}`;
       } else {
-        url = `${environment.backendUrl}/logs?start=${start}&end=${end}&source=${source}&pageNum=${pageNum}&pageSize=${pageSize}`;
+        url = `${environment.backendUrl}/logs` +
+          `?start=${this.dateStart}&end=${this.dateEnd}&source=${this.currentSource}&pageNum=${this.currentPage}&pageSize=${this.pageSize}`;
       }
-      this.httpClient.get<Log[]>(url, options).subscribe(logs => this.logs = logs);
+      this.httpClient.get<Log[]>(url, OPTIONS).subscribe(logs => this.logs = logs);
     });
   }
 
-  private getLogsToSave(start: number, end: number, source: string, pageNum: number, quantity: number): Observable<Log[]> {
-    let url = "";
-    if (source == undefined || source == 'not specified') {
-      url = `${environment.backendUrl}/logs?start=${start}&end=${end}&pageNum=${pageNum}&pageSize=${quantity}`;
+  public save(): void {
+    let url = '';
+    if (this.currentSource == undefined || this.currentSource == 'not specified') {
+      url = `${environment.backendUrl}/logs?start=${this.dateStart}&end=${this.dateEnd}&size=${this.totalItems}`;
     } else {
-      url = `${environment.backendUrl}/logs?start=${start}&end=${end}&source=${source}&pageNum=${pageNum}&pageSize=${quantity}`;
+      url = `${environment.backendUrl}/logs?start=${this.dateStart}&end=${this.dateEnd}&source=${this.currentSource}&size=${this.totalItems}`;
     }
-    console.log(url + " " + this.totalItems);
-
-    return this.httpClient.get<Log[]>(url, options);
-  }
-
-  save(): void {
-    let strLogs = '';
-    this.getLogsToSave(this.dateStart, this.dateEnd, this.currentSource, 1, this.totalItems).subscribe(logs => {
-      for (let log of logs) {
-        let dateInLong = new Date(log.dateTime);
-        let dateInString = dateInLong.toDateString() + ' ' + dateInLong.toTimeString();
-        strLogs += dateInString + ' ' + log.source + ' ' + log.message + '\n';
-      }
-      let file = new File([strLogs], 'logs.txt', {type: 'text/plain;charset=utf-8'});
+    console.log(url);
+    this.httpClient.get(url, {responseType: 'text'}).subscribe(logs => {
+      let file = new File([logs], 'logs.txt', {type: 'text/plain;charset=utf-8'});
       saveAs(file);
     });
   }
 }
-
-const headers = new HttpHeaders({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'});
-const options = {headers};

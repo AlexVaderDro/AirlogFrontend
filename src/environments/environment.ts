@@ -6,7 +6,6 @@ export const environment = {
   production: false,
   backendUrl: 'http://localhost:88',
   frontendUrl: 'http://localhost:4200',
-  millisecondsPerDay: 86400000
 };
 
 /*

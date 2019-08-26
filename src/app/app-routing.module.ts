@@ -8,6 +8,7 @@ const routes: Routes = [
   {path: 'table', component: TableViewComponent},
   {path: 'table?id=:id&source=:source&start=:start&end=:end&page=:page', component: TableViewComponent},
   {path: 'text', component: TextViewComponent},
+  // {path: '**', component: PageNotFoundComponent}
 ];
 
 @NgModule({

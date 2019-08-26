@@ -35,7 +35,7 @@ describe('LogService', () => {
       MOCK_DATA[3]
     ];
 
-    logService.getLogsByDate('1500000000000', '1500000000010', MOCK_SOURCE_LIST[0], 1, 20);
+    logService.getLogs();
 
     tick();
 

@@ -8,11 +8,10 @@
 }
 
 .table-row{
-
 }
 
 .table-row_marked{
-  color: blue;
+  background-color: gainsboro;
 }
 
 .table-row__header-cell{

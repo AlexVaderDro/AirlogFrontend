@@ -9,7 +9,7 @@ import {ActivatedRoute} from '@angular/router';
   templateUrl: './table-view.component.html',
 })
 export class TableViewComponent implements OnInit {
-  private displayedColumns = ['source', 'dateTime', 'message'];
+  private displayedColumns = [];
 
   constructor(private logService: LogService, private activateRoute: ActivatedRoute) {
     const id = this.activateRoute.snapshot.queryParams['id'];
@@ -38,25 +38,13 @@ export class TableViewComponent implements OnInit {
       this.logService.currentPage = page;
     }
 
-    this.logService.getLogsByDate(
-      this.logService.dateStart,
-      this.logService.dateEnd,
-      this.logService.currentSource,
-      this.logService.currentPage,
-      this.logService.pageSize
-    );
+    this.logService.getLogs();
   }
 
   ngOnInit(): void {
   }
 
   onChange() {
-    this.logService.getLogsByDate(
-      this.logService.dateStart,
-      this.logService.dateEnd,
-      this.logService.currentSource,
-      this.logService.currentPage,
-      this.logService.pageSize
-    );
+    this.logService.getLogs();
   }
 }
