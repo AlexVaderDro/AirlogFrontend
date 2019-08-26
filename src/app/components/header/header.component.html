@@ -1,25 +1,5 @@
 <div>
   <header>
     <h1 class="title">Logging Service</h1>
-    <div class="container">
-      <button class="container__button" (click)="tableFormat()">Table</button>
-      <button class="container__button" (click)="textFormat()">Text</button>
-    </div>
-    <div align="center">
-      <p>
-        Select start date:
-        <input type="datetime-local" [value]="dateStart" (keyup)="setStartDate($event)">
-      </p>
-      <p>
-        Select end date:
-        <input type="datetime-local"  [value]="dateEnd" (keyup)="setEndDate($event)">
-      <p>
-        Select source:
-        <app-select></app-select>
-      </p>
-      <p>
-        <button class="container__button" (click)="logService.save()">Save logs</button>
-      </p>
-    </div>
   </header>
 </div>

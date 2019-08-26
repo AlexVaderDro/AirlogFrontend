@@ -9,7 +9,7 @@ import {ActivatedRoute} from '@angular/router';
   templateUrl: './table-view.component.html',
 })
 export class TableViewComponent implements OnInit {
-  private displayedColumns = ['source', 'dateTime', 'message'];
+  private displayedColumns = [];
 
   constructor(private logService: LogService, private activateRoute: ActivatedRoute) {
     const id = this.activateRoute.snapshot.queryParams['id'];

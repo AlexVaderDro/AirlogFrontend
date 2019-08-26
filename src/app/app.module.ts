@@ -14,11 +14,13 @@ import {HeaderComponent} from './components/header/header.component';
 import {SourcePipe} from './pipes/source.pipe';
 import {NgxPaginationModule} from "ngx-pagination";
 import {ClipboardModule} from "ngx-clipboard";
+import {ToolbarComponent} from './components/toolbar/toolbar.component';
 import {LogService} from "./services/log-service/log.service";
 import {DateFormatPipe} from "./pipes/date-format.pipe";
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 @NgModule({
-  declarations: [AppComponent, TableViewComponent, TextViewComponent, SelectComponent, HeaderComponent, SourcePipe, DateFormatPipe],
+  declarations: [AppComponent, TableViewComponent, TextViewComponent, SelectComponent, HeaderComponent, SourcePipe, DateFormatPipe, ToolbarComponent, PageNotFoundComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

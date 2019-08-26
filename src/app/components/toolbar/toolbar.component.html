@@ -1,0 +1,26 @@
+<div class="container">
+  <button class="container__button" (click)="tableFormat()">Table</button>
+  <button class="container__button" (click)="textFormat()">Text</button>
+</div>
+
+<div class="container">
+  <button class="container__button" (click)="logService.save()">Save logs</button>
+</div>
+
+<div class="container">
+  <p>
+    From: <input type="datetime-local" [value]="dateStart" (keyup)="setStartDate($event)">
+  </p>
+</div>
+
+<div class="container">
+  <p>
+    To: <input type="datetime-local"  [value]="dateEnd" (keyup)="setEndDate($event)">
+  </p>
+</div>
+
+<div class="container">
+  <p>
+    Source: <app-select></app-select>
+  </p>
+</div>

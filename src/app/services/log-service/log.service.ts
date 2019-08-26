@@ -3,6 +3,11 @@ import {Log} from '../../models/log';
 import {environment} from '../../../environments/environment';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {saveAs} from 'file-saver';
+import {ActivatedRoute, Router} from "@angular/router";
+
+const MILLISECONDS_PER_DAY = 86400000;
+const HEADERS = new HttpHeaders({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'});
+const OPTIONS = {headers: HEADERS};
 
 export class LogService {
 
@@ -23,7 +28,6 @@ export class LogService {
 
   set dateStart(value: number) {
     this._dateStart = value;
-    this.getLogs();
   }
 
   get dateEnd(): number {
@@ -32,7 +36,6 @@ export class LogService {
 
   set dateEnd(value: number) {
     this._dateEnd = value;
-    this.getLogs();
   }
 
   get currentSource(): string {
@@ -85,14 +88,10 @@ export class LogService {
   }
 
   constructor(private httpClient: HttpClient) {
-    this._dateStart = (Date.now() - environment.millisecondsPerDay); // minus day
+    this.dateStart = (Date.now() - MILLISECONDS_PER_DAY); // minus day
     this.dateEnd = (Date.now());
-
     const url = `${environment.backendUrl}/getTotalItems`;
-    this.httpClient.get<number>(url).subscribe(num => {
-      this.totalItems = num;
-    });
-    this.getLogs();
+    this.httpClient.get<number>(url).subscribe(num => this.totalItems = num);
   }
 
   public getTotalItems(): Observable<number> {
@@ -102,12 +101,12 @@ export class LogService {
     } else {
       url = `${environment.backendUrl}/getTotalItems?dateStart=${this.dateStart}&dateEnd=${this.dateEnd}&source=${this._currentSource}`;
     }
-    return this.httpClient.get<number>(url, options);
+    return this.httpClient.get<number>(url, OPTIONS);
   }
 
   public getSources(): Observable<string[]> {
     const url = `${environment.backendUrl}/sources`;
-    return this.httpClient.get<string[]>(url, options);
+    return this.httpClient.get<string[]>(url, OPTIONS);
   }
 
   public createLink(id: number): string {
@@ -124,12 +123,12 @@ export class LogService {
       } else {
         url = `${environment.backendUrl}/logs?start=${this.dateStart}&end=${this.dateEnd}&source=${this.currentSource}&pageNum=${this.currentPage}&pageSize=${this.pageSize}`;
       }
-      this.httpClient.get<Log[]>(url, options).subscribe(logs => this.logs = logs);
+      this.httpClient.get<Log[]>(url, OPTIONS).subscribe(logs => this.logs = logs);
     });
   }
 
   public save(): void {
-    let url = "";
+    let url = '';
     if (this.currentSource == undefined || this.currentSource == 'not specified') {
       url = `${environment.backendUrl}/logs?start=${this.dateStart}&end=${this.dateEnd}&size=${this.totalItems}`;
     } else {
@@ -142,6 +141,3 @@ export class LogService {
     });
   }
 }
-
-const headers = new HttpHeaders({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'});
-const options = {headers};
