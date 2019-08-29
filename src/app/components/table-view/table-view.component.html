@@ -1,20 +1,24 @@
-<table class="table" [border]="displayedColumns">
-  <tr class="table-row">
-    <th class="table-row__header-cell">Source</th>
-    <th class="table-row__header-cell">Date-time</th>
-    <th class="table-row__header-cell">Message</th>
-    <th class="table-row__header-cell" *ngIf="this.logService.currentSource != 'not specified' && this.logService.currentSource != null">Share</th>
-  </tr>
-  <tr class="table-row" [ngClass]="{'table-row_marked': item.id == this.logService.markedLogId}" *ngFor="let item of this.logService.logs | paginate:{itemsPerPage: this.logService.pageSize, currentPage: this.logService.currentPage, totalItems: this.logService.totalItems} ">
-    <td class="table-row__source-cell">{{item.source}}</td>
-    <td class="table-row__date-cell">{{item.dateTime  | date: "dd/MM/yyyy - hh:mm:ss"}}</td>
-    <td class="table-row__message-cell">{{item.message}}</td>
-    <td class="table-row__copy-link-cell" *ngIf="this.logService.currentSource != 'not specified' && this.logService.currentSource != null">
-      <button class="table-row__button" type="button" ngxClipboard [cbContent]="this.logService.createLink(item.id)">
-        copy link
-      </button>
-    </td>
-  </tr>
+<table class="table table-striped table-bordered table-hover" [border]="displayedColumns">
+  <thead>
+    <tr class="table-row">
+      <th class="table-row__header-cell">Source</th>
+      <th class="table-row__header-cell">Date-time</th>
+      <th class="table-row__header-cell">Message</th>
+      <th class="table-row__header-cell" *ngIf="this.logService.currentSource != 'not specified' && this.logService.currentSource != null">Share</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="table-row" [ngClass]="{'table-row_marked': item.id == this.logService.markedLogId}" *ngFor="let item of this.logService.logs | paginate:{itemsPerPage: this.logService.pageSize, currentPage: this.logService.currentPage, totalItems: this.logService.totalItems} ">
+      <td class="table-row__source-cell">{{item.source}}</td>
+      <td class="table-row__date-cell">{{item.dateTime  | date: "dd/MM/yyyy - hh:mm:ss"}}</td>
+      <td class="table-row__message-cell">{{item.message}}</td>
+      <td class="table-row__copy-link-cell" *ngIf="this.logService.currentSource != 'not specified' && this.logService.currentSource != null">
+        <button class="btn btn-outline-dark" type="button" ngxClipboard [cbContent]="this.logService.createLink(item.id)">
+          copy link
+        </button>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 <pagination-controls (pageChange)="this.logService.currentPage = $event; onChange()"></pagination-controls>

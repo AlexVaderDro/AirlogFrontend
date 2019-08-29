@@ -1,5 +1,6 @@
+/*
 .table {
-  width: calc(100% - 20px);
+  !*width: calc(100% - 20px);*!
   margin-left: 20px;
   margin-right: 20px;
   margin-bottom: 20px;
@@ -9,11 +10,11 @@
 
 .table-row{
 }
-
+*/
 .table-row_marked{
-  background-color: gainsboro;
+  background-color: powderblue;
 }
-
+/*
 .table-row__header-cell{
   text-align: center;
   font-size: 20px;
@@ -32,3 +33,4 @@
   text-align: left;
 }
 
+*/

@@ -1,26 +1,27 @@
-<div class="container">
-  <button class="container__button" (click)="tableFormat()">Table</button>
-  <button class="container__button" (click)="textFormat()">Text</button>
-</div>
+<div class="container row">
+  <div class="row p-3">
+    <div class="btn-group pl-3">
+      <button type="button" class="btn btn-outline-primary" (click)="tableFormat()">Table</button>
+      <button type="button" class="btn btn-outline-primary" (click)="textFormat()">Text</button>
+    </div>
+  </div>
 
-<div class="container">
-  <button class="container__button" (click)="logService.save()">Save logs</button>
-</div>
+  <div class="row p-3 px-3">
+    <div class="px-3 pt-1"><p>From: </p></div>
+    <div><input class="form-control" type="datetime-local" [value]="dateStart" (keyup)="setStartDate($event)"></div>
+  </div>
 
-<div class="container">
-  <p>
-    From: <input type="datetime-local" [value]="dateStart" (keyup)="setStartDate($event)">
-  </p>
-</div>
+  <div class="row p-3 px-3">
+    <div class="px-3 pt-1"><p>To: </p></div>
+    <div><input class="form-control" type="datetime-local"  [value]="dateEnd" (keyup)="setEndDate($event)"></div>
+  </div>
 
-<div class="container">
-  <p>
-    To: <input type="datetime-local"  [value]="dateEnd" (keyup)="setEndDate($event)">
-  </p>
-</div>
+  <div class="row p-3">
+    <div class="px-3 pt-1"><p>Source: </p></div>
+    <app-select></app-select>
+  </div>
 
-<div class="container">
-  <p>
-    Source: <app-select></app-select>
-  </p>
+  <div class="p-3">
+    <button class="btn btn-outline-primary" (click)="logService.save()">Save logs</button>
+  </div>
 </div>
