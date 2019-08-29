@@ -48,6 +48,7 @@ export class ToolbarComponent implements OnInit {
   constructor(private router: Router, private logService: LogService, private dateFormatter: DateFormatPipe) {
     this._dateStart = this.dateFormatter.transform(new Date(this.logService.dateStart));
     this._dateEnd = this.dateFormatter.transform(new Date(this.logService.dateEnd));
+    this.logService.getSources();
   }
 
   ngOnInit() {

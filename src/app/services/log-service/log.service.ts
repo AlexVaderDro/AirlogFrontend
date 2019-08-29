@@ -3,10 +3,10 @@ import {Log} from '../../models/log';
 import {environment} from '../../../environments/environment';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {saveAs} from 'file-saver';
-import {ActivatedRoute, Router} from "@angular/router";
+
 
 const MILLISECONDS_PER_DAY = 86400000;
-const HEADERS = new HttpHeaders({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'});
+const HEADERS = new HttpHeaders({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', Bearer: window.sessionStorage.getItem('AuthToken')});
 const OPTIONS = {headers: HEADERS};
 
 export class LogService {
@@ -91,7 +91,7 @@ export class LogService {
     this.dateStart = (Date.now() - MILLISECONDS_PER_DAY); // minus day
     this.dateEnd = (Date.now());
     const url = `${environment.backendUrl}/getTotalItems`;
-    this.httpClient.get<number>(url).subscribe(num => this.totalItems = num);
+    this.httpClient.get<number>(url, OPTIONS).subscribe(num => this.totalItems = num);
   }
 
   public getTotalItems(): Observable<number> {
