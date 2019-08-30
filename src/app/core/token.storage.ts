@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {AuthService} from "../services/auth-service/auth-service.service";
+import {Router} from "@angular/router";
 
 
 const TOKEN_KEY = 'AuthToken';
