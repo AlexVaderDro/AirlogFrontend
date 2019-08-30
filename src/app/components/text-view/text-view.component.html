@@ -1,3 +1,4 @@
+<app-toolbar></app-toolbar>
 <ul class="log-list">
   <li class="log-list__item" [ngClass]="{'log-list__item_marked': item.id == this.logService.markedLogId}"
       *ngFor="let item of this.logService.logs | paginate:{itemsPerPage: this.logService.pageSize, currentPage: this.logService.currentPage, totalItems: this.logService.totalItems} ">
