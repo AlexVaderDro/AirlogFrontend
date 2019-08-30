@@ -1,15 +1,4 @@
-.header_container {
-  /*border: 1px solid #F1F1F1;*/
-  /*border-style: double;*/
-  background: url(headerBack.png) center;
-  position: center;
-  width: 80%;
-  height: 216px;
-  margin: 0 auto;
-}
-
-.header_container_title {
-  font-size: 36px;
-  padding-top: 10px;
-  text-align: center;
+.title{
+  font-size: 40px;
+  text-align: left;
 }
