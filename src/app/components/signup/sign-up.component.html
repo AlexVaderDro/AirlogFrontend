@@ -1,0 +1,19 @@
+<div align="center" class="alert alert-danger">
+  <h2>Please, provide your credentials</h2>
+</div>
+<form align="center" role="form" (submit)="signUp()">
+  <div class="form-group">
+    <label for="username" class="label">Username:</label> <input type="text"
+                                                                 class="form-control" id="username" name="username"
+                                                                 [(ngModel)]="this.username"/>
+  </div>
+  <div class="form-group">
+    <label for="password" class="label">Password:</label> <input type="password"
+                                                                 class="form-control" id="password" name="password"
+                                                                 [(ngModel)]="this.password"/>
+  </div>
+  <p>
+    <button class="login_button" type="submit">Sign up</button>
+  </p>
+</form>
+<button (click)="goBack()">Back</button>

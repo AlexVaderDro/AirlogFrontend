@@ -6,6 +6,7 @@ import {saveAs} from 'file-saver';
 
 const MILLISECONDS_PER_DAY = 86400000;
 const HEADERS = new HttpHeaders({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'});
+
 const OPTIONS = {headers: HEADERS};
 
 export class LogService {
@@ -90,41 +91,39 @@ export class LogService {
   constructor(private httpClient: HttpClient) {
     this.dateStart = (Date.now() - MILLISECONDS_PER_DAY); // minus day
     this.dateEnd = (Date.now());
-    const url = `${environment.backendUrl}/getTotalItems`;
-    this.httpClient.get<number>(url).subscribe(num => this.totalItems = num);
+    const url = `${environment.backendUrl}/getTotalItems?token=${window.sessionStorage.getItem('AuthToken')}`;
+    this.httpClient.get<number>(url, OPTIONS).subscribe(num => this.totalItems = num);
   }
 
   public getTotalItems(): Observable<number> {
     let url: string;
-    if (this.currentSource === undefined || this.currentSource === 'not specified') {
-      url = `${environment.backendUrl}/getTotalItems?dateStart=${this.dateStart}&dateEnd=${this.dateEnd}`;
+    if (this.currentSource == undefined || this._currentSource === 'not specified') {
+      url = `${environment.backendUrl}/getTotalItems?dateStart=${this.dateStart}&dateEnd=${this.dateEnd}&token=${window.sessionStorage.getItem('AuthToken')}`;
     } else {
-      url = `${environment.backendUrl}/getTotalItems?dateStart=${this.dateStart}&dateEnd=${this.dateEnd}&source=${this.currentSource}`;
+      url = `${environment.backendUrl}/getTotalItems?dateStart=${this.dateStart}&dateEnd=${this.dateEnd}&source=${this._currentSource}&token=${window.sessionStorage.getItem('AuthToken')}`;
     }
     return this.httpClient.get<number>(url, OPTIONS);
   }
 
   public getSources(): Observable<string[]> {
-    const url = `${environment.backendUrl}/sources`;
+    const url = `${environment.backendUrl}/sources?token=${window.sessionStorage.getItem('AuthToken')}`;
     return this.httpClient.get<string[]>(url, OPTIONS);
   }
 
   public createLink(id: number): string {
     return `${environment.frontendUrl}/table` +
-      `?id=${id}&source=${this.currentSource}&start=${this.dateStart}&end=${this.dateEnd}&page=${this.currentPage}`;
+      `?id=${id}&source=${this.currentSource}&start=${this.dateStart}&end=${this.dateEnd}&page=${this.currentPage}&token=${window.sessionStorage.getItem('AuthToken')}`;
   }
 
   public getLogs() {
+    console.log(HEADERS);
     let url: string;
     this.getTotalItems().subscribe(num => {
       this.totalItems = num;
-      if (this.currentSource === undefined || this.currentSource === 'not specified') {
-        url = `${environment.backendUrl}/logs` +
-          `?start=${this.dateStart}&end=${this.dateEnd}&pageNum=${this.currentPage}&pageSize=${this.pageSize}`;
+      if (this.currentSource == undefined || this.currentSource == 'not specified') {
+        url = `${environment.backendUrl}/logs?start=${this.dateStart}&end=${this.dateEnd}&pageNum=${this.currentPage}&pageSize=${this.pageSize}&token=${window.sessionStorage.getItem('AuthToken')}`;
       } else {
-        url = `${environment.backendUrl}/logs` +
-          `?start=${this.dateStart}&end=${this.dateEnd}&source=${this.currentSource}` +
-          `&pageNum=${this.currentPage}&pageSize=${this.pageSize}`;
+        url = `${environment.backendUrl}/logs?start=${this.dateStart}&end=${this.dateEnd}&source=${this.currentSource}&pageNum=${this.currentPage}&pageSize=${this.pageSize}&token=${window.sessionStorage.getItem('AuthToken')}`;
       }
       this.httpClient.get<Log[]>(url, OPTIONS).subscribe(logs => this.logs = logs);
     });
@@ -132,11 +131,10 @@ export class LogService {
 
   public save(): void {
     let url = '';
-    if (this.currentSource === undefined || this.currentSource === 'not specified') {
-      url = `${environment.backendUrl}/logs?start=${this.dateStart}&end=${this.dateEnd}&size=${this.totalItems}`;
+    if (this.currentSource == undefined || this.currentSource == 'not specified') {
+      url = `${environment.backendUrl}/logs?start=${this.dateStart}&end=${this.dateEnd}&size=${this.totalItems}&token=${window.sessionStorage.getItem('AuthToken')}`;
     } else {
-      url = `${environment.backendUrl}/logs` +
-        `?start=${this.dateStart}&end=${this.dateEnd}&source=${this.currentSource}&size=${this.totalItems}`;
+      url = `${environment.backendUrl}/logs?start=${this.dateStart}&end=${this.dateEnd}&source=${this.currentSource}&size=${this.totalItems}&token=${window.sessionStorage.getItem('AuthToken')}`;
     }
     this.httpClient.get(url, {responseType: 'text'}).subscribe(logs => {
       const file = new File(
