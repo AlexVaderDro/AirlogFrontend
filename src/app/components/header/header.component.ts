@@ -3,6 +3,7 @@ import {TokenStorage} from "../../core/token.storage";
 import {tokenize} from "@angular/compiler/src/ml_parser/lexer";
 import {Router} from "@angular/router";
 import {LogService} from "../../services/log-service/log.service";
+import {AuthService} from "../../services/auth-service/auth-service.service";
 
 @Component({
   selector: 'app-header',
@@ -12,7 +13,7 @@ import {LogService} from "../../services/log-service/log.service";
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private tokenStorage: TokenStorage, private router: Router, private logService: LogService) {
+  constructor(private tokenStorage: TokenStorage, private router: Router, private logService: LogService, private authService: AuthService) {
     this.logService.getSources();
   }
 

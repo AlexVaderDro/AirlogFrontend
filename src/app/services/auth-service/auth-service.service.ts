@@ -9,19 +9,26 @@ import {environment} from "../../../environments/environment";
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) {
+  constructor(private _http: HttpClient) {
 
   }
 
   attemtAuth(username: string, password: string): Observable<any> {
     const credentials = {username: username, password: password};
     console.log('attempAuth ::');
-    return this.http.post<any>(`${environment.backendUrl}/login`, credentials);
+    return this._http.post<any>(`${environment.backendUrl}/login`, credentials);
   }
 
   deleteToken(token: string){
     let url = `${environment.backendUrl}/deleteToken`;
     console.log(url, token);
-    this.http.post<any>(url,"\""+token+"\"").subscribe();
+    this._http.post<any>(url,"\""+token+"\"").subscribe();
+  }
+
+  signUp(username: string, password: string): Observable<any>{
+    const credentials = {username :username, password: password};
+    console.log(username, password)
+    console.log('attemptSignUp::');
+    return this._http.post<any>(`${environment.backendUrl}/signUp`, credentials);
   }
 }
