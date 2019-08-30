@@ -18,9 +18,11 @@ import {ToolbarComponent} from './components/toolbar/toolbar.component';
 import {LogService} from "./services/log-service/log.service";
 import {DateFormatPipe} from "./pipes/date-format.pipe";
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { LoginComponent } from './components/login/login.component';
+import {AuthService} from "./services/auth-service/auth-service.service";
 
 @NgModule({
-  declarations: [AppComponent, TableViewComponent, TextViewComponent, SelectComponent, HeaderComponent, SourcePipe, DateFormatPipe, ToolbarComponent, PageNotFoundComponent],
+  declarations: [AppComponent, TableViewComponent, TextViewComponent, SelectComponent, HeaderComponent, SourcePipe, DateFormatPipe, ToolbarComponent, PageNotFoundComponent, LoginComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -34,6 +36,6 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     ClipboardModule,
   ],
   bootstrap: [AppComponent],
-  providers: [LogService]
+  providers: [LogService, HttpClientModule, AuthService]
 })
 export class AppModule {}
