@@ -1,46 +1,77 @@
-import {fakeAsync, TestBed, tick} from '@angular/core/testing';
-import { LogService } from './log.service';
+import {LogService} from './log.service';
 import {MOCK_DATA, MOCK_SOURCE_LIST} from '../../mockdata';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../../environments/environment';
+import {defer} from 'rxjs';
+import * as FileSaver from 'file-saver';
 
+
+export function asyncData<T>(data: T) {
+  return defer(() => Promise.resolve(data));
+}
 
 describe('LogService', () => {
   let logService: LogService;
-  let httpTestingController: HttpTestingController;
+  let httpClientSpy: { get: jasmine.Spy };
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [LogService] // todo stub service
-    });
-    // Returns a service with the MockBackend so we can test with dummy responses
-    logService = TestBed.get(LogService);
-    // Inject the http service and test controller for each test
-    httpTestingController = TestBed.get(HttpTestingController);
+    const response = 100500;
+    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
+    httpClientSpy.get.and.returnValue(asyncData(response));
+    logService = new LogService(httpClientSpy as any);
   });
-
-  afterEach(() => {
-    // After every test, assert that there are no more pending requests.
-    httpTestingController.verify();
-  });
-
 
   it('log-service should be created', () => {
     expect(logService).toBeTruthy();
   });
 
-  it('log-service should return a mock', fakeAsync(() => {
-    const responce = [
-      MOCK_DATA[0],
-      MOCK_DATA[3]
-    ];
+  describe('createLink(id)', () => {
+    it('should return a link', () => {
+      const id = 10;
+      expect(logService.createLink(id)).toBe(`${environment.frontendUrl}/table` +
+        `?id=${id}&source=${logService.currentSource}&start=${logService.dateStart}` +
+        `&end=${logService.dateEnd}&page=${logService.currentPage}`);
+    });
+  });
 
-    logService.getLogs();
+  describe('getTotalItems()', () => {
+    it('should return total items', () => {
+      const expectedResponse = 100500;
+      httpClientSpy.get.and.returnValue(asyncData(expectedResponse));
+      logService.getTotalItems().subscribe(num => expect(num).toBe(expectedResponse));
+      expect(httpClientSpy.get.calls.count()).toBe(2);
+    });
+  });
 
-    tick();
+  describe('getSources()', () => {
+    it('should return sources', () => {
+      const expectedResponse = MOCK_SOURCE_LIST;
+      httpClientSpy.get.and.returnValue(asyncData(expectedResponse));
+      logService.getSources().subscribe(sources => expect(sources).toEqual(expectedResponse));
+      expect(httpClientSpy.get.calls.count()).toBe(2);
+    });
+  });
 
-    expect(logService.logs.length).toBe(responce.length);
-    expect(logService.logs[0]).toBe(responce[0]);
-    expect(logService.logs[1]).toBe(responce[1]);
-  }));
+  describe('getLogs()', () => {
+    it('should get logs', () => {
+      const totalItems = 100500;
+      const expectedLogs = MOCK_DATA;
+      httpClientSpy.get.and.returnValues(asyncData(totalItems), asyncData(expectedLogs));
+      logService.getLogs();
+      setTimeout(() => {
+        expect(logService.logs).toEqual(expectedLogs);
+      }, 1000);
+      expect(httpClientSpy.get.calls.count()).toBe(2);
+    });
+  });
+
+  describe('save()', () => {
+    it('should save a file with a given text', () => {
+      const expectedData = 'some text'; // MOCK_DATA.toString();
+      httpClientSpy.get.and.returnValue(asyncData(expectedData));
+      spyOn(FileSaver, 'saveAs').and.stub().and.returnValue(expectedData);
+      logService.save();
+      expect(FileSaver.saveAs()).toEqual(expectedData);
+    });
+  });
 });

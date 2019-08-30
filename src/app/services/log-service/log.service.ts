@@ -4,7 +4,6 @@ import {environment} from '../../../environments/environment';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {saveAs} from 'file-saver';
 
-
 const MILLISECONDS_PER_DAY = 86400000;
 const HEADERS = new HttpHeaders({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'});
 
@@ -13,9 +12,10 @@ const OPTIONS = {headers: HEADERS};
 export class LogService {
 
   private _logs: Log[];
-  private _markedLogId: number;
 
+  private _markedLogId: number;
   private _currentSource: string;
+
   private _currentPage: number = 1;
   private _pageSize: number = 20;
   private _totalItems: number;
@@ -136,9 +136,12 @@ export class LogService {
     } else {
       url = `${environment.backendUrl}/logs?start=${this.dateStart}&end=${this.dateEnd}&source=${this.currentSource}&size=${this.totalItems}&token=${window.sessionStorage.getItem('AuthToken')}`;
     }
-    console.log(url);
     this.httpClient.get(url, {responseType: 'text'}).subscribe(logs => {
-      let file = new File([logs], 'logs.txt', {type: 'text/plain;charset=utf-8'});
+      const file = new File(
+        [logs],
+        `logs from ${this.dateStart} to ${this.dateEnd} by ${this.currentSource}.txt`,
+        {type: 'text/plain;charset=utf-8'}
+        );
       saveAs(file);
     });
   }
