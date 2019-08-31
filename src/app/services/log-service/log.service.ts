@@ -112,7 +112,8 @@ export class LogService {
 
   public createLink(id: number): string {
     return `${environment.frontendUrl}/table` +
-      `?id=${id}&source=${this.currentSource}&start=${this.dateStart}&end=${this.dateEnd}&page=${this.currentPage}&token=${window.sessionStorage.getItem('AuthToken')}`;
+      `?id=${id}&source=${this.currentSource}&start=${this.dateStart}&end=${this.dateEnd}&page=${this.currentPage}`;
+    /*&token=${window.sessionStorage.getItem('AuthToken')}*/
   }
 
   public getLogs() {

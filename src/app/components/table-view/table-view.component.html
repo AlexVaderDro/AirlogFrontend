@@ -3,10 +3,10 @@
 <table class="table table-striped table-bordered table-hover" [border]="displayedColumns">
   <thead>
     <tr class="table-row">
-      <th class="table-row__header-cell">Source</th>
-      <th class="table-row__header-cell">Date-time</th>
-      <th class="table-row__header-cell">Message</th>
-      <th class="table-row__header-cell" *ngIf="this.logService.currentSource != 'not specified' && this.logService.currentSource != null">Share</th>
+      <th class="table-row__source-cell">Source</th>
+      <th class="table-row__date-cell">Date-time</th>
+      <th class="table-row__message-cell">Message</th>
+      <th class="table-row__copy-link-cell" *ngIf="this.logService.currentSource != 'not specified' && this.logService.currentSource != null">Share</th>
     </tr>
   </thead>
   <tbody>
@@ -23,4 +23,4 @@
   </tbody>
 </table>
 
-<pagination-controls (pageChange)="this.logService.currentPage = $event; onChange()"></pagination-controls>
+<pagination-controls class="pagination" (pageChange)="this.logService.currentPage = $event; onChange()"></pagination-controls>
