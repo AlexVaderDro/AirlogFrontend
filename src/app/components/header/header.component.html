@@ -1,6 +1,8 @@
-<div class="header_container">
-  <header>
+<header class="header">
+  <div class="container row justify-content-between">
     <h1 class="title p-3">LOGGING SERVICE</h1>
-  </header>
-  <button (click)="logout()">Logout</button>
-</div>
+    <div class="p-3">
+      <button *ngIf="isUserLogIn()" type="button" class="btn btn-outline-primary" (click)="logout()">Log out</button>
+    </div>
+  </div>
+</header>

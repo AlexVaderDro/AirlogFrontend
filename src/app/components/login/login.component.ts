@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from "@angular/material";
 import {Router} from "@angular/router";
-import {AuthService} from "../../services/auth-service/auth-service.service";
+import {AuthService} from '../../services/auth-service/auth.service';
 import {TokenStorage} from "../../core/token.storage";
 import {TableViewComponent} from "../table-view/table-view.component";
 
@@ -18,10 +18,11 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  username: string;
-  password: string;
+  public username: string;
+  private password: string;
 
-  login(): void {
+  private login(): void {
+    // TODO delete all console.log
     console.log("login init", this.username, this.password);
     this.authService.attemtAuth(this.username, this.password).subscribe(data => {
       console.log(data.value);
@@ -31,7 +32,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  signUp() {
+  private signUp() {
     this.router.navigateByUrl("/signup");
   }
 }
