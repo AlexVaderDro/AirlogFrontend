@@ -9,7 +9,7 @@ import {environment} from "../../../environments/environment";
 })
 export class AuthService {
 
-  private _isUserAuthorized = false;
+  private _isUserAuthorized = this.hasToken();
 
 
   get isUserAuthorized(): boolean {
@@ -22,6 +22,13 @@ export class AuthService {
 
   constructor(private _http: HttpClient) {
 
+  }
+
+  hasToken(): boolean{
+    if (localStorage.getItem("AuthToken")){
+      return true;
+    }
+    return false;
   }
 
   attemtAuth(username: string, password: string): Observable<any> {

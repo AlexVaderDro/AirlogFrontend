@@ -19,13 +19,13 @@ export class HeaderComponent implements OnInit {
     private logService: LogService,
     private authService: AuthService
   ) {
+    console.log(localStorage.getItem("AuthToken"));
     this.logService.getSources();
   }
 
   ngOnInit() {
   }
 
-  // TODO redo it, it's a temporary solution. This method has to check what the component is loaded
   private isUserAuthorized(): boolean {
     if(!this.authService.isUserAuthorized) {
       return false;

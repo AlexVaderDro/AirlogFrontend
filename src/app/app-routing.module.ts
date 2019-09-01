@@ -8,7 +8,7 @@ import {SignUpComponent} from "./components/signup/sign-up.component";
 import {PageNotFoundComponent} from "./components/page-not-found/page-not-found.component";
 
 const routes: Routes = [
-  {path: '', component: LoginComponent},
+  {path: '', redirectTo: 'table', pathMatch: 'full'},
   {path: 'table', component: TableViewComponent, canActivate: [AuthGuardService]},
   {path: 'table?id=:id&source=:source&start=:start&end=:end&page=:page', component: TableViewComponent, canActivate: [AuthGuardService]},
   {path: 'text', component: TextViewComponent, canActivate: [AuthGuardService]},

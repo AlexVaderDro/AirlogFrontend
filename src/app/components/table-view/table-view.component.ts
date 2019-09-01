@@ -37,7 +37,7 @@ export class TableViewComponent implements OnInit {
     if (page) {
       this.logService.currentPage = page;
     }
-
+    
     this.logService.getLogs();
   }
 

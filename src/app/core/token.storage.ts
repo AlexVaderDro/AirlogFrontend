@@ -12,20 +12,20 @@ export class TokenStorage {
   }
 
   signOut() {
-    let token = sessionStorage.getItem(TOKEN_KEY);
+    let token = localStorage.getItem(TOKEN_KEY);
     this.authService.deleteToken(token).subscribe(data => {
       this.authService.isUserAuthorized = false;
     });
-    sessionStorage.removeItem(TOKEN_KEY);
-    sessionStorage.clear();
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.clear();
   }
 
   public saveToken(token: string) {
-    sessionStorage.removeItem(TOKEN_KEY);
-    sessionStorage.setItem(TOKEN_KEY, token);
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.setItem(TOKEN_KEY, token);
   }
 
   public getToken(): string {
-    return sessionStorage.getItem(TOKEN_KEY);
+    return localStorage.getItem(TOKEN_KEY);
   }
 }

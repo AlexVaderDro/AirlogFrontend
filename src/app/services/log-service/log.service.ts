@@ -3,6 +3,7 @@ import {Log} from '../../models/log';
 import {environment} from '../../../environments/environment';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {saveAs} from 'file-saver';
+import {Router} from "@angular/router";
 
 const MILLISECONDS_PER_DAY = 86400000;
 const HEADERS = new HttpHeaders({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'});
@@ -29,6 +30,7 @@ export class LogService {
 
   set dateStart(value: number) {
     this._dateStart = value;
+    console.log(value);
   }
 
   get dateEnd(): number {
@@ -37,6 +39,7 @@ export class LogService {
 
   set dateEnd(value: number) {
     this._dateEnd = value;
+    console.log(value);
   }
 
   get currentSource(): string {
@@ -46,6 +49,7 @@ export class LogService {
   set currentSource(value: string) {
     this._currentSource = value;
     this.getTotalItems().subscribe(num => this.totalItems = num);
+    console.log(value);
   }
 
   get currentPage(): number {
@@ -54,6 +58,7 @@ export class LogService {
 
   set currentPage(value: number) {
     this._currentPage = value;
+    console.log(value);
   }
 
   get totalItems(): number {
@@ -86,34 +91,35 @@ export class LogService {
 
   set markedLogId(value: number) {
     this._markedLogId = value;
+    console.log(value);
   }
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private route: Router) {
     this.dateStart = (Date.now() - MILLISECONDS_PER_DAY); // minus day
     this.dateEnd = (Date.now());
-    const url = `${environment.backendUrl}/getTotalItems?token=${window.sessionStorage.getItem('AuthToken')}`;
+    const url = `${environment.backendUrl}/getTotalItems?token=${localStorage.getItem('AuthToken')}`;
     this.httpClient.get<number>(url, OPTIONS).subscribe(num => this.totalItems = num);
   }
 
   public getTotalItems(): Observable<number> {
     let url: string;
     if (this.currentSource == undefined || this._currentSource === 'not specified') {
-      url = `${environment.backendUrl}/getTotalItems?dateStart=${this.dateStart}&dateEnd=${this.dateEnd}&token=${window.sessionStorage.getItem('AuthToken')}`;
+      url = `${environment.backendUrl}/getTotalItems?dateStart=${this.dateStart}&dateEnd=${this.dateEnd}&token=${localStorage.getItem('AuthToken')}`;
     } else {
-      url = `${environment.backendUrl}/getTotalItems?dateStart=${this.dateStart}&dateEnd=${this.dateEnd}&source=${this._currentSource}&token=${window.sessionStorage.getItem('AuthToken')}`;
+      url = `${environment.backendUrl}/getTotalItems?dateStart=${this.dateStart}&dateEnd=${this.dateEnd}&source=${this._currentSource}&token=${localStorage.getItem('AuthToken')}`;
     }
     return this.httpClient.get<number>(url, OPTIONS);
   }
 
   public getSources(): Observable<string[]> {
-    const url = `${environment.backendUrl}/sources?token=${window.sessionStorage.getItem('AuthToken')}`;
+    const url = `${environment.backendUrl}/sources?token=${localStorage.getItem('AuthToken')}`;
     return this.httpClient.get<string[]>(url, OPTIONS);
   }
 
   public createLink(id: number): string {
-    return `${environment.frontendUrl}/table` +
+    let url = `${environment.frontendUrl}/table` +
       `?id=${id}&source=${this.currentSource}&start=${this.dateStart}&end=${this.dateEnd}&page=${this.currentPage}`;
-    /*&token=${window.sessionStorage.getItem('AuthToken')}*/
+    return url;
   }
 
   public getLogs() {
@@ -122,27 +128,31 @@ export class LogService {
     this.getTotalItems().subscribe(num => {
       this.totalItems = num;
       if (this.currentSource == undefined || this.currentSource == 'not specified') {
-        url = `${environment.backendUrl}/logs?start=${this.dateStart}&end=${this.dateEnd}&pageNum=${this.currentPage}&pageSize=${this.pageSize}&token=${window.sessionStorage.getItem('AuthToken')}`;
+        url = `${environment.backendUrl}/logs?start=${this.dateStart}&end=${this.dateEnd}&pageNum=${this.currentPage}&pageSize=${this.pageSize}&token=${localStorage.getItem('AuthToken')}`;
       } else {
-        url = `${environment.backendUrl}/logs?start=${this.dateStart}&end=${this.dateEnd}&source=${this.currentSource}&pageNum=${this.currentPage}&pageSize=${this.pageSize}&token=${window.sessionStorage.getItem('AuthToken')}`;
+        url = `${environment.backendUrl}/logs?start=${this.dateStart}&end=${this.dateEnd}&source=${this.currentSource}&pageNum=${this.currentPage}&pageSize=${this.pageSize}&token=${localStorage.getItem('AuthToken')}`;
       }
-      this.httpClient.get<Log[]>(url, OPTIONS).subscribe(logs => this.logs = logs);
+      console.log(url);
+      this.httpClient.get<Log[]>(url, OPTIONS).subscribe(logs => {
+        this.logs = logs;
+        console.log(this.logs);
+      });
     });
   }
 
   public save(): void {
     let url = '';
     if (this.currentSource == undefined || this.currentSource == 'not specified') {
-      url = `${environment.backendUrl}/logs?start=${this.dateStart}&end=${this.dateEnd}&size=${this.totalItems}&token=${window.sessionStorage.getItem('AuthToken')}`;
+      url = `${environment.backendUrl}/logs?start=${this.dateStart}&end=${this.dateEnd}&size=${this.totalItems}&token=${localStorage.getItem('AuthToken')}`;
     } else {
-      url = `${environment.backendUrl}/logs?start=${this.dateStart}&end=${this.dateEnd}&source=${this.currentSource}&size=${this.totalItems}&token=${window.sessionStorage.getItem('AuthToken')}`;
+      url = `${environment.backendUrl}/logs?start=${this.dateStart}&end=${this.dateEnd}&source=${this.currentSource}&size=${this.totalItems}&token=${localStorage.getItem('AuthToken')}`;
     }
     this.httpClient.get(url, {responseType: 'text'}).subscribe(logs => {
       const file = new File(
         [logs],
         `logs from ${this.dateStart} to ${this.dateEnd} by ${this.currentSource}.txt`,
         {type: 'text/plain;charset=utf-8'}
-        );
+      );
       saveAs(file);
     });
   }
