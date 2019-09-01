@@ -3,7 +3,7 @@ import {TokenStorage} from "../../core/token.storage";
 import {tokenize} from "@angular/compiler/src/ml_parser/lexer";
 import {Router} from "@angular/router";
 import {LogService} from "../../services/log-service/log.service";
-import {AuthService} from "../../services/auth-service/auth.service";
+import {AuthService} from "../../services/auth-service/auth-service.service";
 
 @Component({
   selector: 'app-header',
@@ -26,9 +26,10 @@ export class HeaderComponent implements OnInit {
   }
 
   // TODO redo it, it's a temporary solution. This method has to check what the component is loaded
-  private isUserLogIn(): boolean {
-    if(this.router.url === '/login' || this.router.url === '/signup' || this.router.url === '/')
+  private isUserAuthorized(): boolean {
+    if(!this.authService.isUserAuthorized) {
       return false;
+    }
     return true;
   }
 

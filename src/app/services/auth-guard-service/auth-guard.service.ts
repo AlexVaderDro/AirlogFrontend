@@ -1,7 +1,7 @@
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
 import {Observable} from 'rxjs';
-import {AuthService} from '../auth-service/auth.service';
 import {Injectable} from '@angular/core';
+import {AuthService} from "../auth-service/auth-service.service";
 @Injectable({
   providedIn: 'root'
 })
@@ -14,7 +14,7 @@ export class AuthGuardService implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (window.sessionStorage.getItem(this.TOKEN_KEY) != undefined) {
+    if (sessionStorage.getItem(this.TOKEN_KEY) != undefined) {
       console.log('canactivate');
       return true;
     } else {

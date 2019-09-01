@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from "@angular/material";
 import {Router} from "@angular/router";
-import {AuthService} from '../../services/auth-service/auth.service';
 import {TokenStorage} from "../../core/token.storage";
 import {TableViewComponent} from "../table-view/table-view.component";
+import {AuthService} from "../../services/auth-service/auth-service.service";
 
 @Component({
   selector: 'app-login-component',
@@ -25,10 +25,9 @@ export class LoginComponent implements OnInit {
     // TODO delete all console.log
     console.log("login init", this.username, this.password);
     this.authService.attemtAuth(this.username, this.password).subscribe(data => {
-      console.log(data.value);
       this.token.saveToken(data.value);
       this.router.navigateByUrl('/table');
-      // window.location.reload();
+      this.authService.isUserAuthorized = true;
     });
   }
 
