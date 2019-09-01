@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {MatDialog} from "@angular/material";
 import {Router} from "@angular/router";
 import {TokenStorage} from "../../core/token.storage";
-import {TableViewComponent} from "../table-view/table-view.component";
-import {AuthService} from "../../services/auth-service/auth-service.service";
+import {AuthService} from "../../services/auth-service/auth.service";
 
 @Component({
   selector: 'app-login-component',
@@ -29,6 +28,12 @@ export class LoginComponent implements OnInit {
       this.router.navigateByUrl('/table');
       this.authService.isUserAuthorized = true;
     });
+  }
+
+  private refreshUsername(){
+    localStorage.removeItem('username');
+    localStorage.setItem('username', this.username);
+    console.log('username '+localStorage.getItem('username'));
   }
 
   private signUp() {

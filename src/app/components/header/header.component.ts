@@ -3,7 +3,7 @@ import {TokenStorage} from "../../core/token.storage";
 import {tokenize} from "@angular/compiler/src/ml_parser/lexer";
 import {Router} from "@angular/router";
 import {LogService} from "../../services/log-service/log.service";
-import {AuthService} from "../../services/auth-service/auth-service.service";
+import {AuthService} from "../../services/auth-service/auth.service";
 
 @Component({
   selector: 'app-header',
@@ -12,6 +12,7 @@ import {AuthService} from "../../services/auth-service/auth-service.service";
   providers: [TokenStorage]
 })
 export class HeaderComponent implements OnInit {
+  username = localStorage.getItem('username');
 
   constructor(
     private tokenStorage: TokenStorage,
@@ -35,6 +36,8 @@ export class HeaderComponent implements OnInit {
 
   private logout(){
     this.tokenStorage.signOut();
+    localStorage.removeItem('username');
+    localStorage.clear();
     this.router.navigateByUrl('/login');
   }
 }

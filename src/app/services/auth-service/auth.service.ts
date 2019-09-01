@@ -11,7 +11,6 @@ export class AuthService {
 
   private _isUserAuthorized = this.hasToken();
 
-
   get isUserAuthorized(): boolean {
     return this._isUserAuthorized;
   }

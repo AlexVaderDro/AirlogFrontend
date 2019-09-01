@@ -2,7 +2,7 @@
   <h2>Please, provide your credentials</h2>
 </div>
 <div class="container">
-  <form class="form" role="form" (submit)="login()">
+  <form class="form" role="form" (submit)="login(); refreshUsername()">
     <div class="container w-25">
       <label for="username" class="label">Username:</label>
       <input type="text" class="form-control" id="username" name="username" [(ngModel)]="this.username"/>
