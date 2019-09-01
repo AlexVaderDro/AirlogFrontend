@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import {AuthService} from "../services/auth-service/auth-service.service";
-import {Router} from "@angular/router";
+import {AuthService} from '../services/auth-service/auth.service';
 
 
 const TOKEN_KEY = 'AuthToken';
@@ -10,7 +9,7 @@ export class TokenStorage {
 
   constructor(private authService: AuthService) { }
 
-  signOut() {
+  public signOut() {
     let token = window.sessionStorage.getItem(TOKEN_KEY);
     this.authService.deleteToken(token);
     window.sessionStorage.removeItem(TOKEN_KEY);

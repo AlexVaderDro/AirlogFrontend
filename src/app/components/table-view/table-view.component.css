@@ -1,3 +1,15 @@
 .table-row_marked{
   background-color: deepskyblue;
 }
+
+.table-row__source-cell{
+  width: 10%;
+}
+
+.table-row__date-cell{
+  width: 14%;
+}
+
+.table-row__copy-link-cell{
+  width: 10%;
+}
