@@ -21,10 +21,8 @@ export class TokenStorage {
   }
 
   public saveToken(token: string) {
-    console.log("removed token", localStorage.getItem("AuthToken"));
     localStorage.removeItem(TOKEN_KEY);
     localStorage.setItem(TOKEN_KEY, token);
-    console.log("new token", localStorage.getItem("AuthToken"));
   }
 
   public getToken(): string {
