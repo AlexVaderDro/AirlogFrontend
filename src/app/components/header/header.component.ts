@@ -3,6 +3,7 @@ import {TokenStorage} from "../../core/token.storage";
 import {Router} from "@angular/router";
 import {LogService} from "../../services/log-service/log.service";
 import {AuthService} from "../../services/auth-service/auth.service";
+import {Log} from "../../models/log";
 
 @Component({
   selector: 'app-header',
@@ -37,5 +38,6 @@ export class HeaderComponent implements OnInit {
     localStorage.removeItem('username');
     localStorage.clear();
     this.router.navigateByUrl('/login');
+    this.logService.logs = [];
   }
 }

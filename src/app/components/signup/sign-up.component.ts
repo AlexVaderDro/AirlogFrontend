@@ -37,15 +37,19 @@ export class SignUpComponent implements OnInit {
 
   private validate(): boolean {
     if (!this.username) {
-      this.message = 'Invalid username \n';
+      this.message = "Invalid username \n";
       return false;
     }
     if (!this.password) {
-      this.message = 'Password length must be more than 8 characters \n';
+      this.message = "Enter the password \n";
       return false;
     }
-    if (!(this.password === this.confPassword)) {
-      this.message = 'Passwords don\'t match!';
+    if (this.password.length < 8){
+      this.message = "Password length must be more than 8 characters"
+      return false;
+    }
+    if (!(this.password === this.confPassword)){
+      this.message = "Passwords don't match!";
       return false;
     }
     return true;
