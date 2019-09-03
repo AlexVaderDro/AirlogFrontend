@@ -1,8 +1,10 @@
 <header class="header">
-  <div class="row justify-content-between">
-    <h1 class="title p-3">AIRLOG</h1>
+  <div class="row justify-content-between px-3">
+    <div class="p-3">
+      <h1 class="title">AIRLOG</h1>
+    </div>
     <div [hidden]="!isUserAuthorized()" class="p-3">
-      Hi, {{username}}
+      <!--Hi, {{username}}-->
       <button type="button" class="btn btn-outline-primary" (click)="logout()">Log out</button>
     </div>
   </div>
