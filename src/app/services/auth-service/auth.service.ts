@@ -1,23 +1,13 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable} from "rxjs";
 import {environment} from "../../../environments/environment";
 
 
+import { Observable} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
-  private _isUserAuthorized = this.hasToken();
-
-  get isUserAuthorized(): boolean {
-    return this._isUserAuthorized;
-  }
-
-  set isUserAuthorized(value: boolean) {
-    this._isUserAuthorized = value;
-  }
 
   constructor(private _http: HttpClient) {
 
@@ -30,9 +20,9 @@ export class AuthService {
     return false;
   }
 
-  attemtAuth(username: string, password: string): Observable<any> {
+  attemptAuth(username: string, password: string): Observable<any> {
     const credentials = {username: username, password: password};
-    console.log('attempAuth ::');
+    console.log('attemptAuth ::');
     return this._http.post<any>(`${environment.backendUrl}/login`, credentials);
   }
 
@@ -46,6 +36,6 @@ export class AuthService {
     const credentials = {username :username, password: password};
     console.log(username, password);
     console.log('attemptSignUp::');
-    return this._http.post<any>(`${environment.backendUrl}/signUp`, credentials);
+    return this._http.post(`${environment.backendUrl}/signUp`, credentials,{responseType: "text"});
   }
 }

@@ -19,21 +19,41 @@ export class LoginComponent implements OnInit {
 
   public username: string;
   private password: string;
+  private correctCredentials: boolean = true;
+  private message: string;
 
   private login(): void {
-    // TODO delete all console.log
-    console.log("login init", this.username, this.password);
-    this.authService.attemtAuth(this.username, this.password).subscribe(data => {
-      this.token.saveToken(data.value);
-      this.router.navigateByUrl('/table');
-      this.authService.isUserAuthorized = true;
-    });
+    if (this.validate()) {
+      this.authService.attemptAuth(this.username, this.password).subscribe(data => {
+        if (data.value === "User not found"){
+          this.correctCredentials = false;
+          this.message = data.value;
+        } else {
+          this.token.saveToken(data.value);
+          this.router.navigateByUrl('/table');
+        }
+      });
+    } else {
+      this.correctCredentials = false;
+    }
   }
 
   private refreshUsername(){
     localStorage.removeItem('username');
     localStorage.setItem('username', this.username);
     console.log('username '+localStorage.getItem('username'));
+  }
+
+  validate(): boolean {
+    if (!this.password) {
+      this.message = 'Please, provide your password';
+      return false;
+    }
+    if (!this.username) {
+      this.message = 'Please, provide your username';
+      return false;
+    }
+    return true;
   }
 
   private signUp() {

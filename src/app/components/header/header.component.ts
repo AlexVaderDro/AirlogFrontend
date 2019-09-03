@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit {
   }
 
   private isUserAuthorized(): boolean {
-    if(!this.authService.isUserAuthorized) {
+    if(!this.authService.hasToken()) {
       return false;
     }
     return true;

@@ -6,7 +6,7 @@ import {saveAs} from 'file-saver';
 import {Router} from "@angular/router";
 
 const MILLISECONDS_PER_DAY = 86400000;
-const HEADERS = new HttpHeaders({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'});
+const HEADERS = new HttpHeaders({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', Authorization: `${localStorage.getItem('AuthToken')}`});
 
 const OPTIONS = {headers: HEADERS};
 
@@ -97,22 +97,22 @@ export class LogService {
   constructor(private httpClient: HttpClient, private route: Router) {
     this.dateStart = (Date.now() - MILLISECONDS_PER_DAY); // minus day
     this.dateEnd = (Date.now());
-    const url = `${environment.backendUrl}/getTotalItems?token=${localStorage.getItem('AuthToken')}`;
+    const url = `${environment.backendUrl}/getTotalItems`;
     this.httpClient.get<number>(url, OPTIONS).subscribe(num => this.totalItems = num);
   }
 
   public getTotalItems(): Observable<number> {
     let url: string;
     if (this.currentSource == undefined || this._currentSource === 'not specified') {
-      url = `${environment.backendUrl}/getTotalItems?dateStart=${this.dateStart}&dateEnd=${this.dateEnd}&token=${localStorage.getItem('AuthToken')}`;
+      url = `${environment.backendUrl}/getTotalItems?dateStart=${this.dateStart}&dateEnd=${this.dateEnd}`;
     } else {
-      url = `${environment.backendUrl}/getTotalItems?dateStart=${this.dateStart}&dateEnd=${this.dateEnd}&source=${this._currentSource}&token=${localStorage.getItem('AuthToken')}`;
+      url = `${environment.backendUrl}/getTotalItems?dateStart=${this.dateStart}&dateEnd=${this.dateEnd}&source=${this._currentSource}`;
     }
     return this.httpClient.get<number>(url, OPTIONS);
   }
 
   public getSources(): Observable<string[]> {
-    const url = `${environment.backendUrl}/sources?token=${localStorage.getItem('AuthToken')}`;
+    const url = `${environment.backendUrl}/sources`;
     return this.httpClient.get<string[]>(url, OPTIONS);
   }
 
@@ -128,9 +128,9 @@ export class LogService {
     this.getTotalItems().subscribe(num => {
       this.totalItems = num;
       if (this.currentSource == undefined || this.currentSource == 'not specified') {
-        url = `${environment.backendUrl}/logs?start=${this.dateStart}&end=${this.dateEnd}&pageNum=${this.currentPage}&pageSize=${this.pageSize}&token=${localStorage.getItem('AuthToken')}`;
+        url = `${environment.backendUrl}/logs?start=${this.dateStart}&end=${this.dateEnd}&pageNum=${this.currentPage}&pageSize=${this.pageSize}`;
       } else {
-        url = `${environment.backendUrl}/logs?start=${this.dateStart}&end=${this.dateEnd}&source=${this.currentSource}&pageNum=${this.currentPage}&pageSize=${this.pageSize}&token=${localStorage.getItem('AuthToken')}`;
+        url = `${environment.backendUrl}/logs?start=${this.dateStart}&end=${this.dateEnd}&source=${this.currentSource}&pageNum=${this.currentPage}&pageSize=${this.pageSize}`;
       }
       console.log(url);
       this.httpClient.get<Log[]>(url, OPTIONS).subscribe(logs => {
@@ -143,11 +143,11 @@ export class LogService {
   public save(): void {
     let url = '';
     if (this.currentSource == undefined || this.currentSource == 'not specified') {
-      url = `${environment.backendUrl}/logs?start=${this.dateStart}&end=${this.dateEnd}&size=${this.totalItems}&token=${localStorage.getItem('AuthToken')}`;
+      url = `${environment.backendUrl}/logs?start=${this.dateStart}&end=${this.dateEnd}&size=${this.totalItems}`;
     } else {
-      url = `${environment.backendUrl}/logs?start=${this.dateStart}&end=${this.dateEnd}&source=${this.currentSource}&size=${this.totalItems}&token=${localStorage.getItem('AuthToken')}`;
+      url = `${environment.backendUrl}/logs?start=${this.dateStart}&end=${this.dateEnd}&source=${this.currentSource}&size=${this.totalItems}`;
     }
-    this.httpClient.get(url, {responseType: 'text'}).subscribe(logs => {
+    this.httpClient.get(url, {responseType: 'text', headers: {Authorization: `${localStorage.getItem('AuthToken')}`}}).subscribe(logs => {
       const file = new File(
         [logs],
         `logs from ${this.dateStart} to ${this.dateEnd} by ${this.currentSource}.txt`,
