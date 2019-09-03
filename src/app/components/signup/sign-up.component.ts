@@ -14,18 +14,14 @@ export class SignUpComponent implements OnInit {
   private message: string = '';
   private correctCredentials: boolean = true;
 
-  constructor(private authService: AuthService, private router: Router) {
-  }
+  constructor(private authService: AuthService, private router: Router) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  signUp() {
-    console.log(this.username, this.password, this.confPassword);
+  private signUp() {
     if (this.validate()) {
       this.authService.signUp(this.username, this.password).subscribe(data => {
-        if (data == 'User has signed up!') {
-          console.log(data);
+        if (data === 'User has signed up!') {
           this.goBack();
         } else {
           this.correctCredentials = false;
@@ -35,11 +31,11 @@ export class SignUpComponent implements OnInit {
     } else this.correctCredentials = false;
   }
 
-  goBack() {
-    this.router.navigateByUrl("/login");
+  private goBack() {
+    this.router.navigateByUrl('/login');
   }
 
-  validate(): boolean{
+  private validate(): boolean {
     if (!this.username) {
       this.message = "Invalid username \n";
       return false;

@@ -3,7 +3,6 @@ import {Log} from '../../models/log';
 import {environment} from '../../../environments/environment';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {saveAs} from 'file-saver';
-import {Router} from "@angular/router";
 
 const MILLISECONDS_PER_DAY = 86400000;
 
@@ -26,7 +25,6 @@ export class LogService {
 
   set dateStart(value: number) {
     this._dateStart = value;
-    console.log(value);
   }
 
   get dateEnd(): number {
@@ -35,7 +33,6 @@ export class LogService {
 
   set dateEnd(value: number) {
     this._dateEnd = value;
-    console.log(value);
   }
 
   get currentSource(): string {
@@ -45,7 +42,6 @@ export class LogService {
   set currentSource(value: string) {
     this._currentSource = value;
     this.getTotalItems().subscribe(num => this.totalItems = num);
-    console.log(value);
   }
 
   get currentPage(): number {
@@ -54,7 +50,6 @@ export class LogService {
 
   set currentPage(value: number) {
     this._currentPage = value;
-    console.log(value);
   }
 
   get totalItems(): number {
@@ -87,10 +82,9 @@ export class LogService {
 
   set markedLogId(value: number) {
     this._markedLogId = value;
-    console.log(value);
   }
 
-  constructor(private httpClient: HttpClient, private route: Router) {
+  constructor(private httpClient: HttpClient) {
     this.dateStart = (Date.now() - MILLISECONDS_PER_DAY); // minus day
     this.dateEnd = (Date.now());
     const url = `${environment.backendUrl}/getTotalItems`;
@@ -126,7 +120,6 @@ export class LogService {
   }
 
   public getLogs() {
-    console.log(localStorage.getItem("AuthToken"));
     let url: string;
     this.getTotalItems().subscribe(num => {
       this.totalItems = num;
@@ -135,10 +128,8 @@ export class LogService {
       } else {
         url = `${environment.backendUrl}/logs?start=${this.dateStart}&end=${this.dateEnd}&source=${this.currentSource}&pageNum=${this.currentPage}&pageSize=${this.pageSize}`;
       }
-      console.log(url);
       this.httpClient.get<Log[]>(url, this.getOptions()).subscribe(logs => {
         this.logs = logs;
-        console.log(this.logs);
       });
     });
   }

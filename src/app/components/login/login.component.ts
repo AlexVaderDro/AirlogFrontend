@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import {MatDialog} from "@angular/material";
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {TokenStorage} from "../../core/token.storage";
 import {AuthService} from "../../services/auth-service/auth.service";
@@ -12,7 +11,7 @@ import {AuthService} from "../../services/auth-service/auth.service";
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private router: Router, public dialog: MatDialog, private authService: AuthService, private token: TokenStorage) { }
+  constructor(private router: Router, private authService: AuthService, private token: TokenStorage) { }
 
   ngOnInit() {
   }
@@ -25,7 +24,7 @@ export class LoginComponent implements OnInit {
   private login(): void {
     if (this.validate()) {
       this.authService.attemptAuth(this.username, this.password).subscribe(data => {
-        if (data.value === "User not found"){
+        if (data.value === 'User not found'){
           this.correctCredentials = false;
           this.message = data.value;
         } else {
@@ -38,10 +37,9 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  private refreshUsername(){
+  private refreshUsername() {
     localStorage.removeItem('username');
     localStorage.setItem('username', this.username);
-    console.log('username '+localStorage.getItem('username'));
   }
 
   validate(): boolean {
@@ -57,6 +55,6 @@ export class LoginComponent implements OnInit {
   }
 
   private signUp() {
-    this.router.navigateByUrl("/signup");
+    this.router.navigateByUrl('/signup');
   }
 }
