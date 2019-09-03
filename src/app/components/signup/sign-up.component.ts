@@ -45,7 +45,11 @@ export class SignUpComponent implements OnInit {
       return false;
     }
     if (!this.password) {
-      this.message = "Password length must be more than 8 characters \n";
+      this.message = "Enter the password \n";
+      return false;
+    }
+    if (this.password.length < 8){
+      this.message = "Password length must be more than 8 characters"
       return false;
     }
     if (!(this.password === this.confPassword)){
