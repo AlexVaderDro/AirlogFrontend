@@ -46,8 +46,10 @@ export class ToolbarComponent implements OnInit {
    *   (now the date is shown by default instead of date that was gotten from a query params)
    */
   constructor(private router: Router, private logService: LogService, private dateFormatter: DateFormatPipe) {
-    this._dateStart = this.dateFormatter.transform(new Date(this.logService.dateStart));
-    this._dateEnd = this.dateFormatter.transform(new Date(this.logService.dateEnd));
+    if (this.logService.dateStart && this.logService.dateEnd) {
+      this._dateStart = this.dateFormatter.transform(new Date(this.logService.dateStart));
+      this._dateEnd = this.dateFormatter.transform(new Date(this.logService.dateEnd));
+    }
   }
 
   ngOnInit() {

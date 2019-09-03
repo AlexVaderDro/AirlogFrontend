@@ -23,11 +23,11 @@ export class TableViewComponent implements OnInit {
     }
 
     if (dateStart) {
-      this.logService.dateStart = dateStart;
+      this.logService.dateStart = Number(dateStart);
     }
 
     if (dateEnd) {
-      this.logService.dateEnd = dateEnd;
+      this.logService.dateEnd = Number(dateEnd);
     }
 
     if (source) {
@@ -37,7 +37,7 @@ export class TableViewComponent implements OnInit {
     if (page) {
       this.logService.currentPage = page;
     }
-
+    
     this.logService.getLogs();
   }
 

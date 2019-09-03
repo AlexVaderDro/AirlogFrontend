@@ -18,7 +18,8 @@ describe('LogService', () => {
     const response = 100500;
     httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
     httpClientSpy.get.and.returnValue(asyncData(response));
-    logService = new LogService(httpClientSpy as any);
+    // logService = new LogService(httpClientSpy as any);
+    //todo ^
   });
 
   it('log-service should be created', () => {

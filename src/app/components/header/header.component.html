@@ -1,8 +1,9 @@
 <header class="header">
-  <div class="container row justify-content-between">
+  <div class="row justify-content-between">
     <h1 class="title p-3">AIRLOG</h1>
-    <div class="p-3">
-      <button *ngIf="isUserLogIn()" type="button" class="btn btn-outline-primary" (click)="logout()">Log out</button>
+    <div [hidden]="!isUserAuthorized()" class="p-3">
+      Hi, {{username}}
+      <button type="button" class="btn btn-outline-primary" (click)="logout()">Log out</button>
     </div>
   </div>
 </header>

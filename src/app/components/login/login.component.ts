@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from "@angular/material";
 import {Router} from "@angular/router";
-import {AuthService} from '../../services/auth-service/auth.service';
 import {TokenStorage} from "../../core/token.storage";
-import {TableViewComponent} from "../table-view/table-view.component";
+import {AuthService} from "../../services/auth-service/auth.service";
 
 @Component({
   selector: 'app-login-component',
@@ -20,16 +19,41 @@ export class LoginComponent implements OnInit {
 
   public username: string;
   private password: string;
+  private correctCredentials: boolean = true;
+  private message: string;
 
   private login(): void {
-    // TODO delete all console.log
-    console.log("login init", this.username, this.password);
-    this.authService.attemtAuth(this.username, this.password).subscribe(data => {
-      console.log(data.value);
-      this.token.saveToken(data.value);
-      this.router.navigateByUrl('/table');
-      // window.location.reload();
-    });
+    if (this.validate()) {
+      this.authService.attemptAuth(this.username, this.password).subscribe(data => {
+        if (data.value === "User not found"){
+          this.correctCredentials = false;
+          this.message = data.value;
+        } else {
+          this.token.saveToken(data.value);
+          this.router.navigateByUrl('/table');
+        }
+      });
+    } else {
+      this.correctCredentials = false;
+    }
+  }
+
+  private refreshUsername(){
+    localStorage.removeItem('username');
+    localStorage.setItem('username', this.username);
+    console.log('username '+localStorage.getItem('username'));
+  }
+
+  validate(): boolean {
+    if (!this.password) {
+      this.message = 'Please, provide your password';
+      return false;
+    }
+    if (!this.username) {
+      this.message = 'Please, provide your username';
+      return false;
+    }
+    return true;
   }
 
   private signUp() {

@@ -12,6 +12,7 @@ import {AuthService} from "../../services/auth-service/auth.service";
   providers: [TokenStorage]
 })
 export class HeaderComponent implements OnInit {
+  username = localStorage.getItem('username');
 
   constructor(
     private tokenStorage: TokenStorage,
@@ -19,21 +20,24 @@ export class HeaderComponent implements OnInit {
     private logService: LogService,
     private authService: AuthService
   ) {
+    console.log(localStorage.getItem("AuthToken"));
     this.logService.getSources();
   }
 
   ngOnInit() {
   }
 
-  // TODO redo it, it's a temporary solution. This method has to check what the component is loaded
-  private isUserLogIn(): boolean {
-    if(this.router.url === '/login' || this.router.url === '/signup' || this.router.url === '/')
+  private isUserAuthorized(): boolean {
+    if(!this.authService.hasToken()) {
       return false;
+    }
     return true;
   }
 
   private logout(){
     this.tokenStorage.signOut();
+    localStorage.removeItem('username');
+    localStorage.clear();
     this.router.navigateByUrl('/login');
   }
 }
