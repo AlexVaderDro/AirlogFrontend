@@ -10,7 +10,7 @@ export class LogService {
   private _logs: Log[];
 
   private _markedLogId: number;
-  private _currentSource: string;
+  private _currentSource: string = 'not specified';
 
   private _currentPage: number = 1;
   private _pageSize: number = 20;

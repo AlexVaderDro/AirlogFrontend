@@ -41,10 +41,6 @@ export class ToolbarComponent implements OnInit {
     this.logService.getLogs();
   }
 
-  /**
-   *  TODO solve the problem with incorrect showing the date when a user loads the page by query params in a link
-   *   (now the date is shown by default instead of date that was gotten from a query params)
-   */
   constructor(private router: Router, private logService: LogService, private dateFormatter: DateFormatPipe) {
     if (this.logService.dateStart && this.logService.dateEnd) {
       this._dateStart = this.dateFormatter.transform(new Date(this.logService.dateStart));

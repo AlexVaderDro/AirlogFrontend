@@ -30,6 +30,7 @@ export class HeaderComponent implements OnInit {
     if (!this.authService.hasToken()) {
       return false;
     }
+    this.username = this.authService.username;
     return true;
   }
 

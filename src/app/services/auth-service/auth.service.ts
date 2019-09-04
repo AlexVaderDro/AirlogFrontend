@@ -10,6 +10,17 @@ import {Observable} from 'rxjs';
 })
 export class AuthService {
 
+  private _username: string;
+
+
+  get username(): string {
+    return this._username;
+  }
+
+  set username(value: string) {
+    this._username = value;
+  }
+
   constructor(private _http: HttpClient) {}
 
   hasToken(): boolean{
@@ -20,6 +31,7 @@ export class AuthService {
   }
 
   attemptAuth(username: string, password: string): Observable<any> {
+    this.username = username;
     const credentials = {username: username, password: password};
     return this._http.post<any>(`${environment.backendUrl}/login`, credentials);
   }
