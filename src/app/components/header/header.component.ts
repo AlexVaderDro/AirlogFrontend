@@ -4,12 +4,13 @@ import {Router} from "@angular/router";
 import {LogService} from "../../services/log-service/log.service";
 import {AuthService} from "../../services/auth-service/auth.service";
 import {Log} from "../../models/log";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
-  providers: [TokenStorage]
+  providers: [TokenStorage, CookieService]
 })
 export class HeaderComponent implements OnInit {
   username = localStorage.getItem('username');
@@ -18,7 +19,6 @@ export class HeaderComponent implements OnInit {
     private tokenStorage: TokenStorage,
     private router: Router,
     private logService: LogService,
-    private authService: AuthService
   ) {
     this.logService.getSources();
   }
@@ -27,10 +27,10 @@ export class HeaderComponent implements OnInit {
   }
 
   private isUserAuthorized(): boolean {
-    if (!this.authService.hasToken()) {
+    if (!this.tokenStorage.getToken()) {
       return false;
     }
-    this.username = this.authService.username;
+    this.username = localStorage.getItem('username');
     return true;
   }
 

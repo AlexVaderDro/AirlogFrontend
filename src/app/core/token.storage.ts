@@ -1,29 +1,29 @@
 import {Injectable} from '@angular/core';
 import {AuthService} from "../services/auth-service/auth.service";
+import {CookieService} from "ngx-cookie-service";
 
 
-const TOKEN_KEY = 'AuthToken';
+const TOKEN_KEY = 'token';
 
 @Injectable()
 export class TokenStorage {
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private cookie: CookieService) {
   }
 
   signOut() {
-    let token = localStorage.getItem(TOKEN_KEY);
+    let token = this.cookie.get(TOKEN_KEY);
     this.authService.deleteToken(token).subscribe(data => {
     });
-    localStorage.removeItem(TOKEN_KEY);
-    localStorage.clear();
+    this.cookie.delete(TOKEN_KEY);
   }
 
   public saveToken(token: string) {
-    localStorage.removeItem(TOKEN_KEY);
-    localStorage.setItem(TOKEN_KEY, token);
+    this.cookie.delete(TOKEN_KEY);
+    this.cookie.set(TOKEN_KEY, token);
   }
 
   public getToken(): string {
-    return localStorage.getItem(TOKEN_KEY);
+    return this.cookie.get(TOKEN_KEY);
   }
 }

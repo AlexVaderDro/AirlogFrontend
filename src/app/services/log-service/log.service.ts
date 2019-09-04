@@ -3,6 +3,7 @@ import {Log} from '../../models/log';
 import {environment} from '../../../environments/environment';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {saveAs} from 'file-saver';
+import {TokenStorage} from "../../core/token.storage";
 
 const MILLISECONDS_PER_DAY = 86400000;
 
@@ -84,7 +85,7 @@ export class LogService {
     this._markedLogId = value;
   }
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private tokenStorage: TokenStorage) {
     this.dateStart = (Date.now() - MILLISECONDS_PER_DAY); // minus day
     this.dateEnd = (Date.now());
     const url = `${environment.backendUrl}/getTotalItems`;
@@ -92,7 +93,7 @@ export class LogService {
   }
 
   private getOptions(){
-    let HEADERS = new HttpHeaders({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'token': `${localStorage.getItem('AuthToken')}`});
+    let HEADERS = new HttpHeaders({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'token': `${this.tokenStorage.getToken()}`});
 
     let OPTIONS = {headers: HEADERS};
     return OPTIONS;
@@ -141,7 +142,7 @@ export class LogService {
     } else {
       url = `${environment.backendUrl}/logs?start=${this.dateStart}&end=${this.dateEnd}&source=${this.currentSource}&size=${this.totalItems}`;
     }
-    this.httpClient.get(url, {responseType: 'text', headers: {'token': `${localStorage.getItem('AuthToken')}`}}).subscribe(logs => {
+    this.httpClient.get(url, {responseType: 'text', headers: {'token': `${this.tokenStorage.getToken()}`}}).subscribe(logs => {
       const file = new File(
         [logs],
         `logs from ${this.dateStart} to ${this.dateEnd} by ${this.currentSource}.txt`,

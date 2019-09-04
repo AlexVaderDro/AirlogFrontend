@@ -2,16 +2,17 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {TokenStorage} from "../../core/token.storage";
 import {AuthService} from "../../services/auth-service/auth.service";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-login-component',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  providers: [TokenStorage]
+  providers: [TokenStorage, CookieService]
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private router: Router, private authService: AuthService, private token: TokenStorage) { }
+  constructor(private router: Router, private authService: AuthService, private tokenStorage: TokenStorage) { }
 
   ngOnInit() {
   }
@@ -28,7 +29,7 @@ export class LoginComponent implements OnInit {
           this.correctCredentials = false;
           this.message = data.value;
         } else {
-          this.token.saveToken(data.value);
+          this.tokenStorage.saveToken(data.value);
           this.router.navigateByUrl('/table');
         }
       });

@@ -21,6 +21,8 @@ import {PageNotFoundComponent} from './components/page-not-found/page-not-found.
 import {LoginComponent} from './components/login/login.component';
 import {AuthService} from "./services/auth-service/auth.service";
 import {SignUpComponent} from "./components/signup/sign-up.component";
+import {TokenStorage} from "./core/token.storage";
+import {CookieService} from "ngx-cookie-service";
 
 
 @NgModule({
@@ -38,6 +40,6 @@ import {SignUpComponent} from "./components/signup/sign-up.component";
     ClipboardModule,
   ],
   bootstrap: [AppComponent],
-  providers: [LogService, HttpClientModule, AuthService]
+  providers: [LogService, HttpClientModule, AuthService, TokenStorage, CookieService]
 })
 export class AppModule {}
