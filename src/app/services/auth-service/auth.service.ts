@@ -12,13 +12,6 @@ export class AuthService {
 
   constructor(private _http: HttpClient) {}
 
-  hasToken(): boolean{
-    if (localStorage.getItem('AuthToken')){
-      return true;
-    }
-    return false;
-  }
-
   attemptAuth(username: string, password: string): Observable<any> {
     const credentials = {username: username, password: password};
     return this._http.post<any>(`${environment.backendUrl}/login`, credentials);
