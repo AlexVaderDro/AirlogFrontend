@@ -3,7 +3,7 @@ import {AuthService} from "../services/auth-service/auth.service";
 import {CookieService} from "ngx-cookie-service";
 
 
-const TOKEN_KEY = 'token';
+const TOKEN_KEY = 'Authorization';
 
 @Injectable()
 export class TokenStorage {
