@@ -3,9 +3,9 @@
     <div class="p-3">
       <h1 class="title">AIRLOG</h1>
     </div>
-    <div [hidden]="!isUserAuthorized()" class="p-3">
-      Hi, {{username}}
-      <button type="button" class="btn btn-outline-primary" (click)="logout()">Log out</button>
+    <div [hidden]="!isUserAuthorized()" class="p-3 row">
+      <div class="pr-3 pt-1"><p>Hi, {{username}}</p></div>
+      <div class="pr-3"><button type="button" class="btn btn-outline-primary" (click)="logout()">Log out</button></div>
     </div>
   </div>
 </header>
