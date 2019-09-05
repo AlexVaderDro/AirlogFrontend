@@ -12,6 +12,10 @@ export class TableViewComponent implements OnInit {
   private displayedColumns = [];
 
   constructor(private logService: LogService, private activateRoute: ActivatedRoute) {
+
+  }
+
+  ngOnInit(): void {
     const id = this.activateRoute.snapshot.queryParams['id'];
     const source = this.activateRoute.snapshot.queryParams['source'];
     const dateStart = this.activateRoute.snapshot.queryParams['start'];
@@ -37,11 +41,8 @@ export class TableViewComponent implements OnInit {
     if (page) {
       this.logService.currentPage = page;
     }
-    
-    this.logService.getLogs();
-  }
 
-  ngOnInit(): void {
+    this.logService.getLogs();
   }
 
   onChange() {

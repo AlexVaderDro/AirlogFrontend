@@ -11,7 +11,7 @@ export class LogService {
   private _logs: Log[];
 
   private _markedLogId: number;
-  private _currentSource: string = 'not specified';
+  private _currentSource: string;
 
   private _currentPage: number = 1;
   private _pageSize: number = 20;
@@ -93,7 +93,7 @@ export class LogService {
   }
 
   private getOptions(){
-    let HEADERS = new HttpHeaders({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'token': `${this.tokenStorage.getToken()}`});
+    let HEADERS = new HttpHeaders({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Authorization': `${this.tokenStorage.getToken()}`});
 
     let OPTIONS = {headers: HEADERS};
     return OPTIONS;
@@ -142,7 +142,7 @@ export class LogService {
     } else {
       url = `${environment.backendUrl}/logs?start=${this.dateStart}&end=${this.dateEnd}&source=${this.currentSource}&size=${this.totalItems}`;
     }
-    this.httpClient.get(url, {responseType: 'text', headers: {'token': `${this.tokenStorage.getToken()}`}}).subscribe(logs => {
+    this.httpClient.get(url, {responseType: 'text', headers: {'Authorization': `${this.tokenStorage.getToken()}`}}).subscribe(logs => {
       const file = new File(
         [logs],
         `logs from ${this.dateStart} to ${this.dateEnd} by ${this.currentSource}.txt`,
