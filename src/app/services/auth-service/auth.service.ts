@@ -19,7 +19,7 @@ export class AuthService {
 
   deleteToken(token: string): Observable<string> {
     let url = `${environment.backendUrl}/deleteToken`;
-    return this._http.post<string>(url, token);
+    return this._http.post(url, token, {responseType: 'text'});
   }
 
   signUp(username: string, password: string): Observable<any>{

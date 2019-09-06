@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   constructor(private router: Router, private authService: AuthService, private tokenStorage: TokenStorage) { }
 
   ngOnInit() {
+    this.router.navigateByUrl('/table');
   }
 
   public username: string;
