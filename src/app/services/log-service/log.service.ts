@@ -88,7 +88,7 @@ export class LogService {
   constructor(private httpClient: HttpClient, private tokenStorage: TokenStorage) {
     this.dateStart = (Date.now() - MILLISECONDS_PER_DAY); // minus day
     this.dateEnd = (Date.now());
-    const url = `${environment.backendUrl}/getTotalItems`;
+    const url = `${environment.backendUrl}/getTotalItems?source=${this.currentSource}&start=${this.dateStart}&end=${this.dateEnd}`;
     this.httpClient.get<number>(url, this.getOptions()).subscribe(num => this.totalItems = num);
   }
 
@@ -102,9 +102,9 @@ export class LogService {
   public getTotalItems(): Observable<number> {
     let url: string;
     if (this.currentSource == undefined || this._currentSource === 'not specified') {
-      url = `${environment.backendUrl}/getTotalItems?dateStart=${this.dateStart}&dateEnd=${this.dateEnd}`;
+      url = `${environment.backendUrl}/getTotalItems?start=${this.dateStart}&end=${this.dateEnd}`;
     } else {
-      url = `${environment.backendUrl}/getTotalItems?dateStart=${this.dateStart}&dateEnd=${this.dateEnd}&source=${this._currentSource}`;
+      url = `${environment.backendUrl}/getTotalItems?start=${this.dateStart}&end=${this.dateEnd}&source=${this._currentSource}`;
     }
     return this.httpClient.get<number>(url, this.getOptions());
   }
@@ -145,7 +145,7 @@ export class LogService {
     this.httpClient.get(url, {responseType: 'text', headers: {'Authorization': `${this.tokenStorage.getToken()}`}}).subscribe(logs => {
       const file = new File(
         [logs],
-        `logs from ${this.dateStart} to ${this.dateEnd} by ${this.currentSource}.txt`,
+        `logs.txt`,
         {type: 'text/plain;charset=utf-8'}
       );
       saveAs(file);
